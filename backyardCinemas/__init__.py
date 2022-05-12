@@ -1,18 +1,20 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from  flask_sqlalchemy import SQLAlchemy
 
-# Initialising the database object
+# Initialise DB Object
 db = SQLAlchemy()
 
 def create_app():
+
+    # Initialise new Flask app object    
     app = Flask(__name__)
 
-    # App Configurations
+    # Configure app object
     app.debug = True
     app.secret_key = 'Somesecretkey'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///backyardCinemas.db'
 
-    # Initialising the database
     db.init_app(app)
 
     return app
+    
