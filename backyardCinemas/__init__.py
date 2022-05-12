@@ -16,5 +16,8 @@ def create_app():
 
     db.init_app(app)
 
+    from .landing_page_views import main_bp
+    app.register_blueprint(main_bp)
+    
     return app
     
