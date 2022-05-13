@@ -24,7 +24,8 @@ class Ticket(db.Model):
     # Necessary Details
     name = db.Column(db.String(80), nullable=False)
     # Using "Numeric(15,2)" for money data type acording to stackoverflow
-    price = db.Column(db.Numeric(), nullable=False)
+    # "SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively" - Deciding to use a String(5) for price. Will discuss with group.
+    price = db.Column(db.String(5), nullable=False)
 
     def __repr__(self):
         format_string = '<Ticket object {}, Name: {}, Price: {}>'
@@ -39,6 +40,7 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now())
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
         format_string = '<Comment object {}, Text: {}, Created At: {}>'
