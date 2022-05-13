@@ -1,12 +1,13 @@
 from flask import Flask
-from  flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 # Initialise DB Object
 db = SQLAlchemy()
 
+
 def create_app():
 
-    # Initialise new Flask app object    
+    # Initialise new Flask app object
     app = Flask(__name__)
 
     # Configure app object
@@ -18,6 +19,5 @@ def create_app():
 
     from .landing_page_views import main_bp
     app.register_blueprint(main_bp)
-    
+
     return app
-    
