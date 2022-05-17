@@ -1,6 +1,6 @@
 from . import db
 
-
+# User Model for the web application
 class User(db.Model):
     __tablename__ = 'users'
 
