@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email, EqualTo
 
+# Form used to register users
 class RegistrationForm(FlaskForm):
 
     first_name = StringField('First Name', validators = [InputRequired()])
@@ -11,6 +12,7 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Confirm Password', validators = [InputRequired(), EqualTo('password1', message = 'Passwords Must Match!')])
     submit = SubmitField('Sign Up!')
 
+# Form used to login users
 class LoginForm(FlaskForm):
 
     email_address = StringField('Email Address', validators = [InputRequired()])
