@@ -1,9 +1,9 @@
 # Flask module imports
-import email
 from flask import Blueprint, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user
 
+from . import db
 # Form and Model imports
 from forms.auth_forms import RegistrationForm, LoginForm
 from auth_models import User
@@ -34,6 +34,8 @@ def registration_view():
         user = User(first_name = first_name, last_name = last_name, email_address = email_address, password_hash = password_hashed)
 
         # Add DB commit to put new user into the database
+        db.session.add(user)
+        db.session.commit()
 
         # log the user in 
         authenticate_user = User.query.filter_by(email_address = email_address)
