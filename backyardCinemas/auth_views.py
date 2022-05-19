@@ -5,8 +5,8 @@ from flask_login import login_user, logout_user
 from . import db
 
 # Form and Model imports
-from forms.auth_forms import RegistrationForm, LoginForm
-from auth_models import User
+from .auth_forms import RegistrationForm, LoginForm
+from .auth_models import User
 
 # Authentication endpoint
 auth_bp = Blueprint('auth', __name__, url_prefix = '/auth')
