@@ -25,6 +25,12 @@ def create_app():
     login_manager.login_view = 'auth_bp.login_view'
     login_manager.init_app(app)
 
+    # Adding in the user loader function 
+    from .auth_models import User
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
     db.init_app(app)
 
     # importing the main blueprint

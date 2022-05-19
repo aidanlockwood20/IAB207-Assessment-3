@@ -40,10 +40,10 @@ def registration_view():
 
         # log the user in and show flash message
         authenticate_user = User.query.filter_by(email_address = email_address)
-        flash('Welcome to backyardCinemas!')
-        login_user(authenticate_user)
+        flash('Welcome to backyardCinemas! Please log in!')
+        return redirect(url_for('auth.login_view'))
 
-    return render_template('auth/authenticate.html', form = form)
+    return render_template('auth/authenticate.html', form = form, title = 'Register New User')
 
 # The view to login the user
 @auth_bp.route('/login', methods = ['GET', 'POST'])
@@ -85,7 +85,7 @@ def login_view():
         print(error)
         flash(error)
 
-    return render_template('auth/authenticate.html', form = form)
+    return render_template('auth/authenticate.html', form = form, title = 'Login to backyardCinemas')
 
 # Logout user 
 @auth_bp.route('/logout', methods = ['GET', 'POST'])
