@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email, EqualTo
 
+### WILL REFACTOR THIS CODE TO ONE FORM 
+
 # Form used to register users
 class RegistrationForm(FlaskForm):
 
