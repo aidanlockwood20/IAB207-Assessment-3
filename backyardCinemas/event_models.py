@@ -10,8 +10,11 @@ class Event(db.Model):
     image = db.Column(db.String(400), nullable=False)
     description = db.Column(db.String(200))
     date = db.Column(db.DateTime)
+    # Foreign Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # Relationships with other tables
     comments = db.relationship('Comment', backref='Event')
+    tickets = db.relationship('Ticket', backref='Event')
 
     def __repr__(self):
         format_string = '<Event object {}, Name: {}, Image: {}, Description: {}, Date: {}>'
@@ -28,6 +31,8 @@ class Ticket(db.Model):
     price = db.Column(db.String(5), nullable=False)
     # Relationships with other tables
     orders = db.relationship('Order', backref='Ticket')
+    # Foreign Relationships
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
         format_string = '<Ticket object {}, Name: {}, Price: {}>'
@@ -57,3 +62,7 @@ class Order(db.Model):
     # Foreign Relationships
     ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        format_string = '<Order object {}, Amount: {}>'
+        return format_string.format(self.id, self.ticket_amount)

@@ -14,6 +14,8 @@ class User(db.Model):
         db.String(255), nullable=False, default='password1')
     # Relationships with other tables
     orders = db.relationship('Order', backref='User')
+    comments = db.relationship('Comment', backref='User')
+    events = db.relationship('Event', backref='User')
 
     def __repr__(self):
         format_string = '<User object {}, Name: {} {}, Email Address: {}>'
