@@ -1,6 +1,8 @@
 from . import db
 
 # User Model for the web application
+
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -10,6 +12,8 @@ class User(db.Model):
     email_address = db.Column(db.String(128), unique=True, nullable=True)
     password_hash = db.Column(
         db.String(255), nullable=False, default='password1')
+    # Relationships with other tables
+    orders = db.relationship('Order', backref='User')
 
     def __repr__(self):
         format_string = '<User object {}, Name: {} {}, Email Address: {}>'

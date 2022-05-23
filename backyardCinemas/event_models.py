@@ -26,6 +26,8 @@ class Ticket(db.Model):
     # Using "Numeric(15,2)" for money data type acording to stackoverflow
     # "SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively" - Deciding to use a String(5) for price. Will discuss with group.
     price = db.Column(db.String(5), nullable=False)
+    # Relationships with other tables
+    orders = db.relationship('Order', backref='Ticket')
 
     def __repr__(self):
         format_string = '<Ticket object {}, Name: {}, Price: {}>'
@@ -45,3 +47,13 @@ class Comment(db.Model):
     def __repr__(self):
         format_string = '<Comment object {}, Text: {}, Created At: {}>'
         return format_string.format(self.id, self.text, self.created_at)
+
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    # Necessary Details - Set ticket amount to 1 in case customer forget to set number
+    ticket_amount = db.Column(db.Integer, nullable=False, default=1)
+    # Foreign Relationships
+    ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
