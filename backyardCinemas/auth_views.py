@@ -4,9 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 
 from . import db
+
 # Form and Model imports
-from forms.auth_forms import RegistrationForm, LoginForm
-from auth_models import User
+from .auth_forms import RegistrationForm, LoginForm
+from .auth_models import User
 
 # Authentication endpoint
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -60,6 +61,7 @@ def login_view():
 
     if login_form.validate_on_submit():
 
+        # Debug code to check whether the if conditional works 
         print('Form submit')
 
         email_address = login_form.email_address.data
@@ -67,10 +69,13 @@ def login_view():
 
         user_query = User.query.filter_by(email_address=email_address).first()
 
+        # if user is none, assume invalid email address
         if user_query is None:
             error = 'Invalid Email Address. Try Again'
+        # If user is correct but password incorrect, return invalid password
         elif not check_password_hash(user_query.password_hash, password):
             error = 'Incorrect Password. Try Again'
+        # No errors - log user in 
         if error is None:
             login_user(user_query)
             # Back-end feedback for user logging in (Useful pre-development of functional navbar)
