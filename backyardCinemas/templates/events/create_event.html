@@ -1,1 +1,18 @@
+{% extends 'base.html' %}
 
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12">
+
+        <h1>Create a new movie showing</h1>
+        <p>Enter the details of your event.</p>
+
+        {{wtf.quick_form(form)}}
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
