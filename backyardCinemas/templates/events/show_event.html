@@ -40,5 +40,24 @@
    
  
     <hr>  
+    
+     <!-- Comments -->  
+        <div class="row">  
+          <div class="col-md-12">  
+            <h2>Comments</h1>  
+          </div>  
+        </div>  
+
+
+        <div class="row border-bottom"> 
+          {{wtf.quick_form(form,"/events/{0}/comment".format(event.id))}} 
+          {% for comment in event.comments %}
+          <div class="col-md-12">  
+            <b>{{comment.user.name}} <span class="ml-2 text-muted">{{comment.created_at}}</span></b>
+            <p>{{comment.text}}</p>  
+          </div> 
+          {% endfor %}
+        </div>  
+      </div>    
 
 {% endblock %}
