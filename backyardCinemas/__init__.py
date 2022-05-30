@@ -43,5 +43,9 @@ def create_app():
 
     from .error_views import page_not_found
     app.register_error_handler(404, page_not_found)
+    
+    #add event blueprint
+    from .event_views import bp
+    app.register_blueprint(bp)
 
     return app
