@@ -25,7 +25,7 @@ def create():
     db.session.commit()
     print('Successfully created new event', 'success')
     #Always end with redirect when form is valid
-    return redirect(url_for('event.create_event'))
+    return redirect(url_for('event.create'))
   return render_template('events/create_event.html', form=form)
 
 def check_upload_file(form):
