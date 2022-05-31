@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(
         db.String(255), nullable=False, default='password1')
     contact_number = db.Column(db.String(20), nullable=False)
-    address = db.Column(db.String(128), nullable=True)
+    address = db.Column(db.String(128), nullable=False)
     # Relationships with other tables
     comments = db.relationship('Comment', backref='User')
     events = db.relationship('Event', backref='User')
