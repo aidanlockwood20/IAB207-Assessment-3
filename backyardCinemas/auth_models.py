@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
     email_address = db.Column(db.String(128), unique=True, nullable=False)
     password_hash = db.Column(
         db.String(255), nullable=False, default='password1')
-    contact_number = db.Column(db.VarChar(20), nullable=False)
+    contact_number = db.Column(db.VARCHAR(20), nullable=False)
     address = db.Column(db.String(128), nullable=True)
     # Relationships with other tables
     comments = db.relationship('Comment', backref='User')
