@@ -17,7 +17,7 @@ from flask_login import UserMixin
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     # Necessary Details
-    id = db.Column(db.Integer, primary_key=False)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     email_address = db.Column(db.String(128), unique=True, nullable=False)

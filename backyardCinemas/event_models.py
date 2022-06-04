@@ -52,7 +52,7 @@ class Ticket(db.Model):
     # Relationships with other tables
     # orders = db.relationship('Order', backref='Ticket')
     # Foreign Relationships
-    order_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
