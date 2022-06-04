@@ -2,10 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email, EqualTo
 
-### WILL REFACTOR THIS CODE TO ONE FORM 
-
 # Form used to register users
-class RegistrationForm(FlaskForm):
+class AuthForm(FlaskForm):
 
     first_name = StringField('First Name', validators = [InputRequired()])
     last_name = StringField('Last Name', validators = [InputRequired()])

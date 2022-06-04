@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}Hello World{% endblock %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block header %}
 
 {% endblock %}
 
 {% block content %}
+{% with flash_messages = get_flashed_messages() %}
+{% if flash_messages %}
+    {% for message in flash_messages %}
+        <div class="alert alert-success">
+            <h3>{{ message }}</h3>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+{{ wtf.quick_form(form) }}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Internal Server Error{% endblock %}
+{% block content %}
+<h1>Interal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Try refreshing the page, checking
+    the URL is correct, or
+    <a href="{{ url_for('main.index') }}">return to homepage</a>
+</p>
+{% endblock %}
