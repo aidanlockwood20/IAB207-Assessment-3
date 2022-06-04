@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, login_required
 from . import db
 
 # Form and Model imports
-from .auth_forms import RegistrationForm, LoginForm
+from .auth_forms import AuthForm
 from .auth_models import User
 
 # Authentication endpoint
@@ -19,7 +19,7 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 def registration_view():
 
     # Registration form to be used
-    register_form = RegistrationForm()
+    register_form = AuthForm()
 
     if register_form.validate_on_submit():
         print('Form submit')
@@ -57,15 +57,15 @@ def registration_view():
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login_view():
 
-    login_form = LoginForm()
+    form = AuthForm()
 
-    if login_form.validate_on_submit():
+    if form.validate_on_submit():
 
         # Debug code to check whether the if conditional works 
         print('Form submit')
 
-        email_address = login_form.email_address.data
-        password = login_form.password.data
+        email_address = form.email_address.data
+        password = form.password.data
 
         user_query = User.query.filter_by(email_address=email_address).first()
 
@@ -84,7 +84,7 @@ def login_view():
         print(error)
         flash(error)
 
-    return render_template('auth/authenticate.html', form=login_form)
+    return render_template('auth/authenticate.html', form = form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])

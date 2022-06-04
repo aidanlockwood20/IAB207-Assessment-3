@@ -17,13 +17,13 @@ from flask_login import UserMixin
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     # Necessary Details
-    id = db.Column(db.Integer, primary_key=False)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     email_address = db.Column(db.String(128), unique=True, nullable=False)
     password_hash = db.Column(
         db.String(255), nullable=False, default='password1')
-    contact_number = db.Column(db.VarChar(20), nullable=False)
+    contact_number = db.Column(db.String(20), nullable=False)
     address = db.Column(db.String(128), nullable=True)
     # Relationships with other tables
     comments = db.relationship('Comment', backref='User')
