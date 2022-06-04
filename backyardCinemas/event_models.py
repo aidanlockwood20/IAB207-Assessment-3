@@ -57,7 +57,7 @@ class Ticket(db.Model):
     # "SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively" - Deciding to use a String(5) for price. Will discuss with group.
     price = db.Column(db.String(5), nullable=False)
     # Foreign Relationships
-    order_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=True)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
