@@ -1,14 +1,13 @@
-<!-- Top -->
 {% extends 'base.html' %}
-<!-- Title -->
-{% block title %}Backyard Cinemas - Home Page{% endblock %}
 
-<!-- Header -->
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}{{ title }}{% endblock %}
+
 {% block header %}
 
 {% endblock %}
 
-<!-- Content -->
 {% block content %}
 {% with flash_messages = get_flashed_messages() %}
 {% if flash_messages %}
@@ -19,5 +18,5 @@
     {% endfor %}
 {% endif %}
 {% endwith %}
-
+{{ wtf.quick_form(form) }}
 {% endblock %}
