@@ -19,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
             <div class="container-xxl d-flex">
-                <a class="navbar-brand h1" href="index.html">Backyard Cinemas</a>
+                <a class="navbar-brand h1" href="{{ url_for('main.index') }}">Backyard Cinemas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -28,13 +28,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="event-creation.html">Create</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="event-details.html">Events</a>
+                            <a class="nav-link" href="{{ url_for('event.create') }}">Create</a>
                         </li>
                     </ul>
                     {% if current_user.is_authenticated %}
@@ -43,19 +40,19 @@
                             <a class="nav-link active">Hello {{ current_user.first_name }}!</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Purchase History</a>
+                            <a href="{{ url_for('event.purchase_history') }}" class="nav-link">Purchase History</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Logout</a>
+                            <a href="{{ url_for('auth.logout_view') }}" class="nav-link">Logout</a>
                         </li>
                     </ul> 
                     {% else %}
                     <ul class="navbar-nav mx-3">
                         <li class="nav-item">
-                            <a href="/auth/register" class="nav-link">Register</a>
+                            <a class="nav-link" href="{{ url_for('auth.registration_view') }}">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/auth/login" class="nav-link">Login</a>
+                            <a class="nav-link" href="{{ url_for('auth.login_view')}}">Login</a>
                         </li>
                     </ul>
                     {% endif %}

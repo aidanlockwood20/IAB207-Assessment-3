@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+
 {% with flash_messages = get_flashed_messages() %}
 {% if flash_messages %}
     {% for message in flash_messages %}
@@ -18,5 +19,11 @@
     {% endfor %}
 {% endif %}
 {% endwith %}
-{{ wtf.quick_form(form) }}
+
+<div class="container-xxl bg-dark py-3 mt-5">
+    <div class="bg-light5 card border-3 p-2">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+
 {% endblock %}

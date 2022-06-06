@@ -1,5 +1,4 @@
 # Flask module imports
-from distutils.log import Log
 from flask import Blueprint, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
@@ -7,11 +6,11 @@ from flask_login import login_user, logout_user, login_required
 from . import db
 
 # Form and Model imports
-from .auth_forms import RegistrationForm, LoginForm
+from .auth_forms import LoginForm, RegistrationForm
 from .auth_models import User
 
 # Authentication endpoint
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix = '/auth')
 
 # View to register new users
 
@@ -29,6 +28,7 @@ def registration_view():
         first_name = register_form.first_name.data
         last_name = register_form.last_name.data
         email_address = register_form.email_address.data
+        contact_number = register_form.contact_number.data
         password = register_form.password1.data
 
         # Check if user exists
@@ -40,16 +40,18 @@ def registration_view():
         password_hashed = generate_password_hash(password)
 
         # Create new instance of the user to be saved into the database
-        user = User(first_name=first_name, last_name=last_name,
+        user = User(first_name=first_name, last_name=last_name, contact_number = contact_number,
                     email_address=email_address, password_hash=password_hashed)
 
+        print(user)
         # Add DB commit to put new user into the database
         db.session.add(user)
         db.session.commit()
 
+        # log the user in
         return redirect(url_for('auth.login_view'))
     else:
-        return render_template('auth/authenticate.html', form=register_form)
+        return render_template('auth/register.html', form=register_form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -83,8 +85,10 @@ def login_view():
             return redirect(url_for('main.index'))
         print(error)
         flash(error)
+    else:
+        print(form.form_errors)
 
-    return render_template('auth/authenticate.html', form = form)
+    return render_template('auth/login.html', form = form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])
