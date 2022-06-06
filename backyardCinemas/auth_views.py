@@ -11,7 +11,7 @@ from .auth_forms import RegistrationForm, LoginForm
 from .auth_models import User
 
 # Authentication endpoint
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix = '/auth')
 
 # View to register new users
 
