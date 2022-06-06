@@ -1,4 +1,5 @@
 # Flask module imports
+from distutils.log import Log
 from flask import Blueprint, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
@@ -6,7 +7,7 @@ from flask_login import login_user, logout_user, login_required
 from . import db
 
 # Form and Model imports
-from .auth_forms import AuthForm
+from .auth_forms import RegistrationForm, LoginForm
 from .auth_models import User
 
 # Authentication endpoint
@@ -19,7 +20,7 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 def registration_view():
 
     # Registration form to be used
-    register_form = AuthForm()
+    register_form = RegistrationForm()
 
     if register_form.validate_on_submit():
         print('Form submit')
@@ -46,10 +47,7 @@ def registration_view():
         db.session.add(user)
         db.session.commit()
 
-        # log the user in
-        authenticate_user = User.query.filter_by(email_address=email_address)
-        login_user(authenticate_user)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('auth.login_view'))
     else:
         return render_template('auth/authenticate.html', form=register_form)
 
@@ -57,8 +55,10 @@ def registration_view():
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login_view():
 
-    form = AuthForm()
+    form = LoginForm()
 
+    error = None
+    
     if form.validate_on_submit():
 
         # Debug code to check whether the if conditional works 
