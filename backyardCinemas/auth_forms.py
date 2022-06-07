@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, widgets
 from wtforms.validators import InputRequired, Email, EqualTo
 
 # Form used to register users
@@ -15,6 +15,6 @@ class RegistrationForm(FlaskForm):
 # Form used to login users
 class LoginForm(FlaskForm):
 
-    email_address = StringField('Email Address', validators = [InputRequired()])
+    email_address = StringField('Email Address', validators = [InputRequired()], widget = widgets.TextInput(widgets.html_params(class_='form-control bg-light5')))
     password = PasswordField('Password', validators = [InputRequired()])
     submit = SubmitField('Login')

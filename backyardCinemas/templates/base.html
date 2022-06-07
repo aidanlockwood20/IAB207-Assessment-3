@@ -19,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
             <div class="container-xxl d-flex">
-                <a class="navbar-brand h1" href="index.html">Backyard Cinemas</a>
+                <a class="navbar-brand h1" href="{{ url_for('main.index') }}'">Backyard Cinemas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}'">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="event-creation.html">Create</a>
@@ -46,7 +46,7 @@
                             <a href="" class="nav-link">Purchase History</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Logout</a>
+                            <a href="{{ url_for('auth.logout_view')}}" class="nav-link">Logout</a>
                         </li>
                     </ul> 
                     {% else %}
@@ -71,8 +71,14 @@
         {% block header %}
         {% endblock %}
     </header>
-    {% block content %}
-    {% endblock %}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        {% block footer %}
+        {% endblock %}
+    </footer>
 </body>
 
 </html>
