@@ -49,7 +49,7 @@ def registration_view():
 
         return redirect(url_for('auth.login_view'))
     else:
-        return render_template('auth/authenticate.html', form=register_form)
+        return render_template('auth/register.html', form=register_form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -84,7 +84,7 @@ def login_view():
         print(error)
         flash(error)
 
-    return render_template('auth/authenticate.html', form = form)
+    return render_template('auth/login.html', form = form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])
