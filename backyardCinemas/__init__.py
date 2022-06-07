@@ -23,7 +23,7 @@ def create_app():
     # Configuring the Login Manager
     login_manager = LoginManager()
 
-    login_manager.login_view = 'auth.login_view'
+    login_manager.login_view = 'auth_bp.login_view'
     login_manager.init_app(app)
 
     # Adding in the user loader function
