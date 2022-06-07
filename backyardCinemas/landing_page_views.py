@@ -9,7 +9,6 @@ main_bp = Blueprint('main', __name__)
 @main_bp.route('/')
 def index():
 
-    
     users = User.query.all()
     events = Event.query.all()
     tickets = Ticket.query.all()

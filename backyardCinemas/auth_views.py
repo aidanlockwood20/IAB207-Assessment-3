@@ -23,6 +23,7 @@ def registration_view():
     register_form = RegistrationForm()
 
     if register_form.validate_on_submit():
+        print('Form submit')
 
         # Gather the data from the form
         first_name = register_form.first_name.data
@@ -46,11 +47,9 @@ def registration_view():
         db.session.add(user)
         db.session.commit()
 
-        success_message = 'New User Registered. Login to your Account'
-        flash(success_message)
         return redirect(url_for('auth.login_view'))
     else:
-        return render_template('auth/register.html', title = 'Register', form=register_form)
+        return render_template('auth/authenticate.html', form=register_form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -61,6 +60,9 @@ def login_view():
     error = None
     
     if form.validate_on_submit():
+
+        # Debug code to check whether the if conditional works 
+        print('Form submit')
 
         email_address = form.email_address.data
         password = form.password.data
@@ -77,14 +79,12 @@ def login_view():
         if error is None:
             login_user(user_query)
             # Back-end feedback for user logging in (Useful pre-development of functional navbar)
-            success_message = 'User successfully logged in!'
-            flash(success_message)
+            print('User successfully logged in!')
             return redirect(url_for('main.index'))
         print(error)
         flash(error)
 
-
-    return render_template('auth/login.html', title = 'Login', form = form)
+    return render_template('auth/authenticate.html', form = form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])
