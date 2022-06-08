@@ -31,17 +31,18 @@
                             </div>
                             <div class="card-body">
                                 <h5>{{ form.password.label }}</h5>
-                                {{ form.password(class_="form-control bg-light5") }}
-                            </div>
-                            <div class="container-fluid d-flex">
-                                {{ form.submit(class_="btn bg-light6 w-100", style="font-size: 20px;") }}
+                                {{ form.password(class_="form-control bg-light5 mb-4") }}
+                                {{ form.submit(class_="btn bg-light6 w-25 mx-auto", style="font-size: 20px;") }}
                             </div>
                         </div>
                     </div>
                 </form>
-                <div class="bg-light5 card border-3 p-2">
-                    <div class="card bg-light5 border-0">
-                        <h5 class="text-center">Don't have an account? <a class="nav-link bg-light5" href="{{ url_for('auth.registration_view') }}">Sign Up!</a></h5>
+                <div class="card bg-light2 border-0">
+                    <div class="card-body">
+                        <ul class="d-flex">
+                            <li><h5 class="text-center my-4" style="list-style: none;">Don't have an account?</h5></li>
+                            <li><a class="nav-link btn bg-light6" style="font-size: 20px; list-style: none;" href="{{ url_for('auth.registration_view') }}">Sign Up!</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

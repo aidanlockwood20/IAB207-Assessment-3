@@ -1,5 +1,4 @@
 # Flask module imports
-from distutils.log import Log
 from flask import Blueprint, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
@@ -49,7 +48,7 @@ def registration_view():
 
         return redirect(url_for('auth.login_view'))
     else:
-        return render_template('auth/register.html', form=register_form)
+        return render_template('auth/register.html', title = 'Sign Up', form = register_form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -84,7 +83,7 @@ def login_view():
         print(error)
         flash(error)
 
-    return render_template('auth/login.html', form = form)
+    return render_template('auth/login.html', title = 'Login', form = form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])
