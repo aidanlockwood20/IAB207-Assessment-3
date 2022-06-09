@@ -26,13 +26,12 @@
             <div class="col-12 my-3">
                 <div class="card bg-light2 border-0 m-0">
                     <div class="card-body">
-                        <!-- <h5>{{ form.email_address.label }}</h5> -->
-                        {{ form.email_address(class_="form-control bg-light5", placeholder="Email Address") }}
+                        <h5>{{ form.email_address.label }}</h5>
+                        {{ form.email_address(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body">
-                        <!-- <h5>{{ form.password.label }}</h5> -->
-                        {{ form.password(class_="form-control bg-light5", placeholder="Password") }}
-
+                        <h5>{{ form.password.label }}</h5>
+                        {{ form.password(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body row justify-content-center mx-0">
                         {{ form.submit(class_="btn bg-light6 col-md-8 col-lg-6 col-xxl-4", style="font-size: 20px;") }}
