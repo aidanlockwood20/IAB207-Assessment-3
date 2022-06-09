@@ -9,41 +9,46 @@
 {% block content %}
 {% with flash_messages = get_flashed_messages() %}
 {% if flash_messages %}
-    {% for message in flash_messages %}
-        <div class="alert alert-success">
-            <h3>{{ message }}</h3>
-        </div>
-    {% endfor %}
+{% for message in flash_messages %}
+<div class="alert alert-success">
+    <h3>{{ message }}</h3>
+</div>
+{% endfor %}
 {% endif %}
 {% endwith %}
-        <div class="container-xxl bg-dark my-5 py-3">
-            <div class="bg-light5 card border-3 p-2">
-                <div class="card bg-light5 border-0">
-                    <h1 class="text-center my-3">Login to your Account</h1>
-                </div>
-                <form method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="col-12 my-3">
-                        <div class="card bg-light2 border-0">
-                            <div class="card-body">
-                                <h5>{{ form.email_address.label }}</h5>
-                                {{ form.email_address(class_="form-control bg-light5") }}
-                            </div>
-                            <div class="card-body">
-                                <h5>{{ form.password.label }}</h5>
-                                {{ form.password(class_="form-control bg-light5") }}
-                            </div>
-                            <div class="container-fluid d-flex">
-                                {{ form.submit(class_="btn bg-light6 w-100", style="font-size: 20px;") }}
-                            </div>
-                        </div>
+<div class="container-xxl bg-dark my-5 py-3">
+    <div class="bg-light5 card border-3 p-2">
+        <div class="card bg-light5 border-0">
+            <h1 class="text-center my-3">Login to your Account</h1>
+        </div>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="col-12 my-3">
+                <div class="card bg-light2 border-0 m-0">
+                    <div class="card-body">
+                        <!-- <h5>{{ form.email_address.label }}</h5> -->
+                        {{ form.email_address(class_="form-control bg-light5", placeholder="Email Address") }}
                     </div>
-                </form>
-                <div class="bg-light5 card border-3 p-2">
-                    <div class="card bg-light5 border-0">
-                        <h5 class="text-center">Don't have an account? <a class="nav-link bg-light5" href="{{ url_for('auth.registration_view') }}">Sign Up!</a></h5>
+                    <div class="card-body">
+                        <!-- <h5>{{ form.password.label }}</h5> -->
+                        {{ form.password(class_="form-control bg-light5", placeholder="Password") }}
+
+                    </div>
+                    <div class="card-body row justify-content-center mx-0">
+                        {{ form.submit(class_="btn bg-light6 col-md-8 col-lg-6 col-xxl-4", style="font-size: 20px;") }}
                     </div>
                 </div>
             </div>
+        </form>
+        <div class="bg-light2 border-0 m-0 row justify-content-center">
+            <div class="col-12">
+                <h5 class="text-center my-3" style="list-style: none;">Don't have an account?</h5>
+            </div>
+            <div class="col-6 m-3 mt-0 col-md-4">
+                <a class="nav-link btn bg-light6" style="font-size: 20px; list-style: none;"
+                    href="{{ url_for('auth.registration_view') }}">Sign Up!</a>
+            </div>
         </div>
+    </div>
+</div>
 {% endblock %}
