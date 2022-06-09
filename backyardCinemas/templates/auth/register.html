@@ -28,24 +28,24 @@
             <div class="col-12 my-3">
                 <div class="card bg-light2 border-0">
                     <div class="card-body">
-                        <h5>{{ form.first_name.label }} - Not your middle name</h5>
-                        {{ form.first_name(class_="form-control bg-light5", placeholder="First Name") }}
+                        <h5>{{ form.first_name.label }}</h5>
+                        {{ form.first_name(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body">
                         <h5>{{ form.last_name.label }}</h5>
-                        {{ form.last_name(class_="form-control bg-light5", placeholder="Last Name") }}
+                        {{ form.last_name(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body">
-                        <h5>{{ form.email_address.label }} - Make sure it is a valid email address</h5>
-                        {{ form.email_address(class_="form-control bg-light5", placeholder="Email Address") }}
+                        <h5>{{ form.email_address.label }}</h5>
+                        {{ form.email_address(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body">
                         <h5>{{ form.password1.label }}</h5>
-                        {{ form.password1(class_="form-control bg-light5", placeholder="Password") }}
+                        {{ form.password1(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body">
-                        <h5>{{ form.password2.label }} - Make sure your passwords match</h5>
-                        {{ form.password2(class_="form-control bg-light5", placeholder="Repeat Password") }}
+                        <h5>{{ form.password2.label }}</h5>
+                        {{ form.password2(class_="form-control bg-light5") }}
                     </div>
                     <div class="card-body row justify-content-center mx-0">
                         {{ form.submit(class_="btn bg-light6 col-md-8 col-lg-6 col-xxl-4", style="font-size: 20px;") }}
