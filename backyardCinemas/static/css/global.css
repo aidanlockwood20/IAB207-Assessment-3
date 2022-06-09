@@ -139,6 +139,14 @@ footer a {
     text-align-last: center;
 }
 
+.errorplinks a {
+    color: rgb(218, 191, 118);
+}
+
+.errorplinks a:hover {
+    color: rgb(160, 140, 86);
+}
+
 #userhistory {
     color: rgb(218, 191, 118);
 }

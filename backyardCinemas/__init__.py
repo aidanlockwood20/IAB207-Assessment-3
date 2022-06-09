@@ -47,6 +47,9 @@ def create_app():
     from .error_views import page_not_found, interal_server_error
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(500, interal_server_error)
+    # Testing 500 error
+    # from .error_views import error_bp
+    # app.register_blueprint(error_bp)
 
     # add event blueprint
     from .event_views import bp

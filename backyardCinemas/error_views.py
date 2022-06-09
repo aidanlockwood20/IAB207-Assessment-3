@@ -1,3 +1,4 @@
+# from flask import Blueprint
 from flask import Flask, render_template
 
 # Create error views, labelled accordingly
@@ -30,6 +31,13 @@ def page_not_found(e):
 # 500 Internal Server Error
 def interal_server_error(e):
     return render_template('errors/500.html'), 500
+
+# Purely testing 500 error
+# error_bp = Blueprint('error', __name__, url_prefix='/errors')
+
+# @error_bp.route('/500', methods=['GET'])
+# def create():
+#     return render_template('errors/500.html')
 
 # 502 Bad Gateway
 
