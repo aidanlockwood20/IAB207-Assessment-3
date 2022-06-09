@@ -37,15 +37,22 @@
                     </div>
                     <div class="card-body">
                         <h5>{{ form.email_address.label }}</h5>
-                        {{ form.email_address(class_="form-control bg-light5") }}
+                        {{ form.email_address(class_="form-control bg-light5", placeholder="This is how you'll be identified") }}
                     </div>
                     <div class="card-body">
                         <h5>{{ form.password1.label }}</h5>
                         {{ form.password1(class_="form-control bg-light5") }}
                     </div>
+                    <div id="password-info">
+                        <ul class="my-2">
+                            <li><p>Make sure your password is at least 8 characters long</p></li>
+                            <li><p>Include at least one symbol in your password</p></li>
+                            <li><p>Include a selection of numbers</p></li>
+                        </ul>
+                    </div>
                     <div class="card-body">
                         <h5>{{ form.password2.label }}</h5>
-                        {{ form.password2(class_="form-control bg-light5") }}
+                        {{ form.password2(class_="form-control bg-light5", placeholder='Re Enter the password above') }}
                     </div>
                     <div class="card-body row justify-content-center mx-0">
                         {{ form.submit(class_="btn bg-light6 col-md-8 col-lg-6 col-xxl-4", style="font-size: 20px;") }}
