@@ -10,7 +10,7 @@ from .auth_forms import RegistrationForm, LoginForm
 from .auth_models import User
 
 # Authentication endpoint
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix = '/auth')
 
 # View to register new users
 
@@ -46,26 +46,25 @@ def registration_view():
         db.session.add(user)
         db.session.commit()
 
-        # log the user in
-        authenticate_user = User.query.filter_by(email_address=email_address)
-        login_user(authenticate_user)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('auth.login_view'))
     else:
-        return render_template('auth/authenticate.html', form=register_form)
+        return render_template('auth/register.html', title = 'Sign Up', form = register_form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login_view():
 
-    login_form = LoginForm()
+    form = LoginForm()
 
-    if login_form.validate_on_submit():
+    error = None
+    
+    if form.validate_on_submit():
 
         # Debug code to check whether the if conditional works 
         print('Form submit')
 
-        email_address = login_form.email_address.data
-        password = login_form.password.data
+        email_address = form.email_address.data
+        password = form.password.data
 
         user_query = User.query.filter_by(email_address=email_address).first()
 
@@ -84,7 +83,7 @@ def login_view():
         print(error)
         flash(error)
 
-    return render_template('auth/authenticate.html', form=login_form)
+    return render_template('auth/login.html', title = 'Login', form = form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])

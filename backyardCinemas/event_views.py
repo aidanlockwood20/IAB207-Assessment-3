@@ -1,3 +1,4 @@
+
 from flask import Blueprint, render_template, request, redirect, url_for
 from .event_models import Event, Comment
 from .event_forms import EventForm, CommentForm
@@ -36,6 +37,11 @@ def create():
         # Always end with redirect when form is valid
         return redirect(url_for('event.create'))
     return render_template('events/create_event.html', form=form)
+
+
+@bp.route('/purchase_history', methods=['GET', 'POST'])
+def purchase_history():
+    return render_template('events/purchase_history.html')
 
 
 def check_upload_file(form):
