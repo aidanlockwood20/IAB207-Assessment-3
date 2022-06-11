@@ -24,10 +24,12 @@ class Event(db.Model):
     # an event must have one of the following states: Upcoming, Inactive, Booked,
     # or Cancelled."
     # Longest word is 9 long, may as well store value as string(10). Default to Upcoming.
-    status = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.String(10), nullable=False, default="Upcoming")
     # Just shy of 512 for description
     description = db.Column(db.String(500))
-    date = db.Column(db.DateTime)
+    startDate = db.Column(db.DateTime)
+    duration = db.Column(db.DateTime)
+    location = db.Column(db.String(128), nullable=False)
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # Relationships with other tables
