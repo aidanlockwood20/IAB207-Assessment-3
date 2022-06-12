@@ -1,0 +1,149 @@
+.cssbackground-image {
+    background-image: url('../img/bgpic.png');
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover
+}
+
+.bg-light2 {
+    background-color: rgb(66, 63, 58);
+    color: rgb(218, 191, 118);
+    border-color: rgb(218, 191, 118);
+    border-radius: 0px;
+}
+
+.bg-light3 {
+    background-color: rgb(80, 73, 63);
+    color: rgb(218, 191, 118);
+    border-color: rgb(218, 191, 118);
+    border-radius: 0px;
+}
+
+.bg-light3:hover {
+    background-color: rgb(143, 128, 105);
+    color: rgb(41, 36, 24);
+}
+
+.bg-light4 {
+    background-color: rgb(34, 37, 41);
+    color: rgb(218, 191, 118);
+    border-color: rgb(218, 191, 118);
+    border-radius: 0px;
+}
+
+.bg-light4:hover {
+    background-color: rgb(87, 94, 105);
+    border-color: rgb(87, 94, 105);
+    color: rgb(41, 36, 24);
+}
+
+.bg-light5 {
+    background-color: rgb(80, 73, 63);
+    color: rgb(218, 191, 118);
+    border-color: rgb(218, 191, 118);
+    border-radius: 0px;
+}
+
+
+.bg-light6 {
+    background-color: rgb(80, 73, 63);
+    color: rgb(218, 191, 118);
+    border-color: rgb(218, 191, 118);
+    border-radius: 0px;
+}
+
+.bg-light6:hover {
+    background-color: rgb(112, 102, 88);
+    color: rgb(230, 201, 124);
+}
+
+.bg-light6:active {
+    background-color: rgb(66, 63, 58);
+}
+
+.border1 {
+    border-color: rgb(34, 37, 41);
+    border-top: 4px;
+}
+
+.bg-dark2 {
+    background-color: rgb(16, 12, 7);
+}
+
+.bg-dark3 {
+    background-color: rgb(19, 23, 27);
+}
+
+#footer1 {
+    bottom: 0px;
+    border-color: rgb(218, 191, 118);
+    border-style: solid;
+    border-width: 4px;
+    border-bottom: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+body {
+    background-image: linear-gradient(to right, rgb(12, 10, 7), rgb(21, 14, 7), rgb(11, 10, 7))
+}
+
+footer a {
+    color: white;
+}
+
+.justify1 {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.htext {
+    font-size: 48px;
+    color: rgb(218, 191, 118);
+}
+
+.htext2 {
+    font-size: 32px;
+    color: rgb(218, 191, 118);
+}
+
+.htext3 {
+    font-size: 26px;
+    color: rgb(218, 191, 118);
+}
+
+.htext4 {
+    font-size: 18px;
+    color: rgb(218, 191, 118);
+}
+
+.htext5 {
+    font-size: 18px;
+    color: rgba(182, 160, 98, 0.7);
+}
+
+.carouseltext {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(34, 37, 41, .8);
+    border-style: solid;
+    border-radius: 0px;
+    border-color: rgba(34, 37, 41, .5);
+    padding: 10px;
+}
+
+.text-center1 {
+    text-align: center;
+    text-align-last: center;
+}
+
+#userhistory {
+    color: rgb(218, 191, 118);
+}
+
+#accountmenu {
+    cursor: pointer;
+    pointer-events: none;
+}
