@@ -60,8 +60,8 @@
                     </ul>
                     {% endif %}
 
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" action="{{ url_for('main.search')}}">
+                        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn bg-light4" type="submit">Search</button>
                     </form>
 
