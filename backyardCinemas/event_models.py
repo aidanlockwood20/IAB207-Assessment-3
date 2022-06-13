@@ -19,7 +19,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     image = db.Column(db.String(400), nullable=False)
-    max_tickets = db.Column(db.Integer, nullable=False)
+    max_tickets = db.Column(db.Integer)
     # From the task sheet: "In addition,
     # an event must have one of the following states: Upcoming, Inactive, Booked,
     # or Cancelled."
@@ -29,7 +29,7 @@ class Event(db.Model):
     description = db.Column(db.String(500))
     startDate = db.Column(db.DateTime)
     duration = db.Column(db.DateTime)
-    location = db.Column(db.String(128), nullable=False)
+    location = db.Column(db.String(128))
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # Relationships with other tables
@@ -37,8 +37,8 @@ class Event(db.Model):
     tickets = db.relationship('Ticket', backref='Event')
 
     def __repr__(self):
-        format_string = '<Event object {}, Name: {}, Image: {}, Description: {}, Date: {}>'
-        return format_string.format(self.id, self.name, self.image, self.description, self.date)
+        format_string = '<Event object {}, Name: {}, Image: {}, Description: {}, Start Date: {}, Duration: {}, Location: {}>'
+        return format_string.format(self.id, self.name, self.image, self.description, self.startDate, self.duration, self.location)
 
 #
 # Ticket Functions:
@@ -63,8 +63,8 @@ class Ticket(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
-        format_string = '<Ticket object {}, Name: {}, Price: {}>'
-        return format_string.format(self.id, self.name, self.price)
+        format_string = '<Ticket object {}, Price: {}>'
+        return format_string.format(self.id, self.price)
 
 #
 # Comment Functions:
@@ -112,5 +112,5 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        format_string = '<Order object {}, Amount: {}>'
-        return format_string.format(self.id, self.ticket_amount)
+        format_string = '<Order object {}>'
+        return format_string.format(self.id)
