@@ -1,3 +1,4 @@
+
 from flask import Blueprint, render_template, request, redirect, url_for
 from .event_models import Event, Comment
 from .event_forms import EventForm, CommentForm
@@ -16,6 +17,28 @@ def show(id):
     # create the comment form
     cform = CommentForm()
     return render_template('events/show_event.html', event=event, form=cform)
+
+@bp.route('/<event>/comment', methods=['GET', 'POST'])
+@login_required
+def comment(event):
+    form = CommentForm()
+    # get the event object associated to the page and the comment
+    event_obj = Event.query.filter_by(id=event).first()
+    if form.validate_on_submit():
+        # read the comment from the form
+        comment = Comment(text=form.text.data,
+                          Event=event_obj,
+                          User=current_user)
+        # here the back-referencing works - comment.event is set
+        # and the link is created
+        db.session.add(comment)
+        db.session.commit()
+
+        # flashing a message which needs to be handled by the html
+        #flash('Your comment has been added', 'success')
+        print('Your comment has been added', 'success')
+    # using redirect sends a GET request to event.show
+    return redirect(url_for('event.show', id=event))
 
 
 @bp.route('/create_event', methods=['GET', 'POST'])
@@ -36,6 +59,11 @@ def create():
         # Always end with redirect when form is valid
         return redirect(url_for('event.create'))
     return render_template('events/create_event.html', form=form)
+
+
+@bp.route('/purchase_history', methods=['GET', 'POST'])
+def purchase_history():
+    return render_template('events/purchase_history.html')
 
 
 def check_upload_file(form):
