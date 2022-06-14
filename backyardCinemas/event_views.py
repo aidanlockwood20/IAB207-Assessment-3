@@ -7,6 +7,7 @@ import os
 from werkzeug.utils import secure_filename
 # additional import:
 from flask_login import login_required, current_user
+from datetime import time, datetime
 
 bp = Blueprint('event', __name__, url_prefix='/events')
 
@@ -17,6 +18,7 @@ def show(id):
     # create the comment form
     cform = CommentForm()
     return render_template('events/show_event.html', event=event, form=cform)
+
 
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
 @login_required
@@ -50,7 +52,9 @@ def create():
         # call the function that checks and returns image
         db_file_path = check_upload_file(form)
         event = Event(name=form.name.data, description=form.description.data,
-                      image=db_file_path, date=form.date.data)
+                      image=db_file_path, startDate=form.startDate.data,
+                      duration=form.duration.data, location=form.location.data,
+                      max_tickets=form.max_tickets.data, status=form.status.data, user_id=current_user.id)
         # add the object to the db session
         db.session.add(event)
         # commit to the database

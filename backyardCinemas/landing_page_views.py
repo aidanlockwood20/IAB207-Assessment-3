@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template
 from flask_login import current_user
+from .event_models import Event
 
 from . import db
 from .auth_models import User
@@ -14,8 +15,8 @@ main_bp = Blueprint('main', __name__)
 def index():
 
     print(current_user.is_authenticated)
-
-    return render_template('index.html')
+    events_obj = Event.query.all()
+    return render_template('index.html', events=events_obj)
 
 
 @main_bp.route('/search')
