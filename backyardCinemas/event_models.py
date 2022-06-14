@@ -28,7 +28,7 @@ class Event(db.Model):
     # Just shy of 512 for description
     description = db.Column(db.String(500))
     startDate = db.Column(db.DateTime)
-    duration = db.Column(db.DateTime)
+    duration = db.Column(db.Time)
     location = db.Column(db.String(128), nullable=False)
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
