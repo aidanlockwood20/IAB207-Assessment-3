@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, DateTimeField, IntegerField, SelectField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, DateTimeField, IntegerField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 
@@ -11,7 +11,7 @@ class EventForm(FlaskForm):
   description = TextAreaField('Description', 
             validators=[InputRequired()])
   startDate = DateTimeField('Date', validators=[InputRequired()])
-  duration = DateTimeField('Duration of movie', validators=[InputRequired()])
+  duration = TimeField('Duration of movie', validators=[InputRequired()])
   location = StringField('Event Location', validators=[InputRequired()])
   image = FileField('Event Image', validators=[
     FileRequired(message='Image cannot be empty'),
