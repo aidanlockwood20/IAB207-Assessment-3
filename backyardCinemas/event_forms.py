@@ -14,13 +14,17 @@ class EventForm(FlaskForm):
                                 validators=[InputRequired()])
     startDate = DateTimeField('Date', validators=[InputRequired()])
     duration = SelectField('Duration of movie', choices=[(
-        '', 'Choose a time'), ('30', '30 Minutes')], validators=[InputRequired()])
+        '', 'Choose a duration in minutes'), ('30', '30 Minutes'), ('60', '60 Minutes'),
+        ('90', '90 Minutes'), ('120', '120 Minutes'), ('150',
+                                                       '150 Minutes'), ('180', '180 Minutes'),
+        ('210', '210 Minutes'), ('240', '240 Minutes'), ('270', '270 Minutes'), ('300', '300 Minutes')],
+        validators=[InputRequired()])
     location = StringField('Event Location', validators=[InputRequired()])
     image = FileField('Event Image', validators=[
         FileRequired(message='Image cannot be empty'),
         FileAllowed(ALLOWED_FILE, message='Only supports png,jpg,JPG,PNG')])
     max_tickets = IntegerField(
-        'Number of tickets', validators=[InputRequired()])
+        'Maximum number of tickets', validators=[InputRequired()])
     status = SelectField('Event status', choices=[('', 'Choose a status'), ('Upcoming', 'Upcoming'), ('Inactive', 'Inactive'), ('Booked', 'Booked'), ('Cancelled', 'Cancelled')], validators=[InputRequired()], render_kw={
                          "placeholder": "Choose a status"})
     submit = SubmitField("Create")
