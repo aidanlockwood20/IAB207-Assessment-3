@@ -10,6 +10,7 @@
     <img class="card-img-top" src="{{event.image}}" alt="Card image cap">
     <div class="card bg-light5 border-0">
         <h1 class="text-center my-3">{{event.name}}</h1>
+        <h3 class="text-center my-3">{{event.status}}</h3>
     </div>
     <div class="col-12 my-3">
         <div class="card bg-light2 border-0 m-0">
@@ -19,15 +20,19 @@
             </div>
             <div class="card-body">
                 <h5>Date</h5>
-                {{event.date}}
+                {{event.startDate}}
+            </div>
+            <div class="card-body">
+              <h5>Duration</h5>
+              {{event.duration}} min
             </div>
             <div class="card-body">
               <h5>Price</h5>
-              $14.00 per ticket
+              ${{event.price}} per ticket
             </div>
             <div class="card-body">
               <h5>Avaliable Tickets</h5>
-              20
+              {{ticketsAvailable}}
             </div>
             <div class="card-body row justify-content-center mx-0">
               <a class="nav-link btn bg-light6" style="font-size: 20px;"
