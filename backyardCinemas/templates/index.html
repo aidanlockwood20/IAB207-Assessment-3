@@ -10,7 +10,14 @@
 
 <!-- Content -->
 {% block content %}
-<div>
-    <p>Test word - index.html</p>
-</div>
+{% with flash_messages = get_flashed_messages() %}
+{% if flash_messages %}
+    {% for message in flash_messages %}
+        <div class="alert alert-success">
+            <h3>{{ message }}</h3>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
 {% endblock %}

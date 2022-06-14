@@ -16,7 +16,7 @@ def forbidden(e):
 
 
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('errors/404.html'), 404
 
 
 # 405 Method Not Allowed
@@ -28,6 +28,8 @@ def page_not_found(e):
 # 410 Gone
 
 # 500 Internal Server Error
+def interal_server_error(e):
+    return render_template('errors/500.html'), 500
 
 # 502 Bad Gateway
 

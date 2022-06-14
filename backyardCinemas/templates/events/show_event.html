@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<div class="container-xxl bg-dark my-5 py-3">
+                  
+  <div class="bg-light5 card border-3 p-2">
+    <img class="card-img-top" src="{{event.image}}" alt="Card image cap">
+    <div class="card bg-light5 border-0">
+        <h1 class="text-center my-3">{{event.name}}</h1>
+    </div>
+    <div class="col-12 my-3">
+        <div class="card bg-light2 border-0 m-0">
+            <div class="card-body">
+                <h5>Description</h5>
+                {{event.description}}
+            </div>
+            <div class="card-body">
+                <h5>Date</h5>
+                {{event.date}}
+            </div>
+            <div class="card-body">
+              <h5>Price</h5>
+              $14.00 per ticket
+            </div>
+            <div class="card-body">
+              <h5>Avaliable Tickets</h5>
+              20
+            </div>
+            <div class="card-body row justify-content-center mx-0">
+              <a class="nav-link btn bg-light6" style="font-size: 20px;"
+              href="javascript:void(0);">Book Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="bg-light2 border-0 m-0 row justify-content-center">
+        <div class="col-12">
+            <h5 class="text-center my-3">Comments</h5>
+        </div>
+        <div class="col-6 m-3 mt-0 col-md-4">
+          {% for comment in event.comments %}
+              <div class="col-md-12">  
+                <b>{{comment.User.first_name}} <span class="ml-2 text-muted">{{comment.created_at}}</span></b>
+                <p>{{comment.text}}</p>  
+              </div> 
+          {% endfor %}
+
+
+          <form method="POST" action="/events/{{event.id}}/comment" class="form" role="form">
+            {{ form.hidden_tag() }}
+            <div class="row border-bottom form-group required"> 
+              <h5>{{ form.text.label }}</h5>
+              {{ form.text(class_="form-control bg-light5") }}
+              {{ form.submit(class_="form-control bg-light5") }}
+            </div>  
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
