@@ -151,3 +151,8 @@ footer a {
     cursor: pointer;
     pointer-events: none;
 }
+
+.footer2 {
+    position: sticky;
+
+}

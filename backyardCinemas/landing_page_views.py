@@ -9,21 +9,20 @@ from .event_models import Event
 
 main_bp = Blueprint('main', __name__)
 
+
 @main_bp.route('/')
 def index():
 
     print(current_user.is_authenticated)
-    
-    users = User.query.all()
-    events = Event.query.all()
-    tickets = Ticket.query.all()
-    comments = Comment.query.all()
+
     return render_template('index.html')
+
 
 @main_bp.route('/search')
 def search():
     if request.args['search']:
         search_results = request.args["search"]
 
-        events = Event.query.filter(Event.description.like(search_results)).all()
-        return render_template('search.html', results = search_results)
+        events = Event.query.filter(
+            Event.description.like(search_results)).all()
+        return render_template('search.html', results=search_results)
