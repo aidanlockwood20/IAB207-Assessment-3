@@ -17,7 +17,7 @@ class EventForm(FlaskForm):
                                 validators=[InputRequired()])
     startDate = DateField('Date', validators=[InputRequired()])
     duration = IntegerField('Duration of movie (mins)',
-                            validators=[InputRequired()])
+                            validators=[InputRequired(), NumberRange(min=1)])
     location = StringField('Event Location', validators=[InputRequired()])
     image = FileField('Event Image', validators=[
         FileRequired(message='Image cannot be empty'),

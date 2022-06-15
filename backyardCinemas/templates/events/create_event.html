@@ -5,7 +5,15 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-12">
-
+      {% with flash_messages = get_flashed_messages() %}
+      {% if flash_messages %}
+      {% for message in flash_messages %}
+      <div class="alert alert-success">
+        <h3>{{ message }}</h3>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
 
     </div>
   </div>
@@ -51,7 +59,7 @@
           <div class="card-body">
             <h5>{{ form.image.label }}</h5>
             {{ form.image(class_="form-control bg-light5") }}
-          </div> 
+          </div>
           <div class="card-body">
             <h5>{{ form.status.label }}</h5>
             {{ form.status(class_="form-control bg-light5") }}

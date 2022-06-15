@@ -61,6 +61,7 @@ def create():
         db.session.add(event)
         # commit to the database
         db.session.commit()
+        flash('Successfully created new event!')
         print('Successfully created new event', 'success')
         # Always end with redirect when form is valid
         return redirect(url_for('event.create'))
@@ -95,21 +96,28 @@ def check_upload_file(form):
 def update(id):
     form = EventForm()
     event_to_update = Event.query.get_or_404(id)
+    print('In Update')
     if request.method == "POST":
+        # if form.validate_on_submit():
+        print('In POST')
         event_to_update.name = request.form['name']
         event_to_update.description = request.form['description']
         event_to_update.startDate = request.form['startDate']
         event_to_update.duration = request.form['duration']
         event_to_update.location = request.form['location']
-        event_to_update.image = request.form['image']
+        # db_file_path = check_upload_file(form)
+        # event_to_update.image = request.form[db_file_path, False]
         event_to_update.max_tickets = request.form['max_tickets']
         event_to_update.cost = request.form['cost']
         event_to_update.status = request.form['status']
+        print('Finished POST')
         try:
             db.session.commit()
             flash("Event Updated Successfully.")
+            print('Event Updated Successfully.')
             return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
         except:
+            db.session.rollback()
             flash("Error! Event Updated Unsuccessfully... try again.")
             return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
     else:
