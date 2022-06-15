@@ -55,7 +55,7 @@ def create():
                       location=form.location.data, 
                       image=db_file_path, 
                       max_tickets=form.max_tickets.data, 
-                      status='Upcoming')
+                      status=form.status.data)
         # add the object to the db session
         db.session.add(event)
         # commit to the database

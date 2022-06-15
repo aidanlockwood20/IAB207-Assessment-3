@@ -18,7 +18,7 @@ class Event(db.Model):
     # Necessary Details according to task sheet: Image, descrition, date, "other specific information"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    image = db.Column(db.String(400), nullable=True)
+    image = db.Column(db.String(400))
     max_tickets = db.Column(db.Integer)
     # From the task sheet: "In addition,
     # an event must have one of the following states: Upcoming, Inactive, Booked,
@@ -28,7 +28,7 @@ class Event(db.Model):
     # Just shy of 512 for description
     description = db.Column(db.String(500))
     startDate = db.Column(db.DateTime)
-    duration = db.Column(db.DateTime)
+    duration = db.Column(db.Integer)
     location = db.Column(db.String(128))
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
