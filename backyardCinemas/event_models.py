@@ -1,4 +1,8 @@
+
 from . import db
+from werkzeug.utils import secure_filename
+# additional import:
+from flask_login import login_required, current_user
 from datetime import datetime
 
 #
@@ -11,7 +15,6 @@ from datetime import datetime
 # Event is created by a user. An event can only be created by one user, a user can create many events. One to Many.
 # Event is appended with a comment. An event can have multiple comments, a comment can only relate to one event. Many to One.
 # Event has tickets. An event can have many tickets, a ticket can only relate to one event. Many to One.
-
 
 class Event(db.Model):
     __tablename__ = 'events'
