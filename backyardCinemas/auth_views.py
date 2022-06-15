@@ -80,6 +80,7 @@ def login_view():
         if error is None:
             login_user(user_query)
             # Back-end feedback for user logging in (Useful pre-development of functional navbar)
+            flash('Successfully logged in!')
             print('User successfully logged in!')
             return redirect(url_for('main.index'))
         print(error)

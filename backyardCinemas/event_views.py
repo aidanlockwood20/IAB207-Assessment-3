@@ -1,6 +1,7 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
 from .event_models import Event, Comment
+from .auth_models import User
 from .event_forms import EventForm, CommentForm
 from . import db
 import os
@@ -71,9 +72,11 @@ def create():
     return render_template('events/create_event.html', form=form)
 
 
-@bp.route('/purchase_history', methods=['GET', 'POST'])
-def purchase_history():
-    return render_template('events/purchase_history.html')
+@bp.route('/event_history', methods=['GET', 'POST'])
+def event_history():
+    print(current_user.id)
+    event = Event.query.filter_by(user_id=current_user.id).all()
+    return render_template('events/event_history.html', events=event)
 
 
 def check_upload_file(form):
@@ -95,40 +98,48 @@ def check_upload_file(form):
 
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
-    form = EventForm()
-    event_to_update = Event.query.get_or_404(id)
-    print('In Update')
-    print(event_to_update)
-    if request.method == "POST" and form.validate_on_submit():
-        print('In POST')
-        db_file_path = check_upload_file(form)
-        midnight = dt.min.time()
-        startDateData = dt.combine(
-            form.startDate.data, midnight)
+    CheckEvent = Event.query.filter_by(id=id).first()
+    CheckUser = current_user.id
+    if CheckEvent.user_id is CheckUser:
+        form = EventForm()
+        event_to_update = Event.query.get_or_404(id)
+        print('In Update')
         print(event_to_update)
-        event_to_update.name = request.form['name']
-        event_to_update.description = request.form['description']
-        event_to_update.startDate = startDateData
-        event_to_update.duration = request.form['duration']
-        event_to_update.location = request.form['location']
-        event_to_update.image = db_file_path
-        event_to_update.max_tickets = request.form['max_tickets']
-        event_to_update.cost = request.form['cost']
-        event_to_update.status = request.form['status']
-        print('Finished POST')
-        print(event_to_update)
-        try:
-            db.session.commit()
-            flash("Event Updated Successfully.")
-            print('Event Updated Successfully.')
+        if request.method == "POST" and form.validate_on_submit():
+            print('In POST')
+            db_file_path = check_upload_file(form)
+            midnight = dt.min.time()
+            startDateData = dt.combine(
+                form.startDate.data, midnight)
+            print(event_to_update)
+            event_to_update.name = request.form['name']
+            event_to_update.description = request.form['description']
+            event_to_update.startDate = startDateData
+            event_to_update.duration = request.form['duration']
+            event_to_update.location = request.form['location']
+            event_to_update.image = db_file_path
+            event_to_update.max_tickets = request.form['max_tickets']
+            event_to_update.cost = request.form['cost']
+            event_to_update.status = request.form['status']
+            print('Finished POST')
+            print(event_to_update)
+            try:
+                db.session.commit()
+                flash("Event Updated Successfully.")
+                print('Event Updated Successfully.')
+                return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+            except:
+                db.session.rollback()
+                flash("Error! Event Updated Unsuccessfully... try again.")
+                print('Event Update Failed')
+                return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+            finally:
+                db.session.close()
+        else:
             return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
-        except:
-            db.session.rollback()
-            flash("Error! Event Updated Unsuccessfully... try again.")
-            print('Event Update Failed')
-            return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
-        finally:
-            db.session.close()
     else:
-        return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+        flash('Error: You can only update the details of your own events!')
+        print('User Auth Failed')
+        return show(id)
