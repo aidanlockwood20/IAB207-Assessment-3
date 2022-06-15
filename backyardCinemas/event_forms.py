@@ -20,6 +20,7 @@ class EventForm(FlaskForm):
     FileRequired(message='Image cannot be empty'),
     FileAllowed(ALLOWED_FILE, message='Only supports png,jpg,JPG,PNG')])
   max_tickets = IntegerField('Number of tickets', validators=[InputRequired()])
+  cost = IntegerField('Cost per ticket', validators=[InputRequired()], render_kw={"placeholder": "Please enter an amount in dollars ($)"})
   status = StringField('Event status', validators=[InputRequired()], render_kw={"placeholder": "Please list as either Upcoming, Inactive, Booked, or Cancelled."})
   submit = SubmitField("Create")
   
