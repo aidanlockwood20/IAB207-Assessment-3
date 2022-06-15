@@ -1,7 +1,7 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
 from .event_models import Event, Comment
-from .event_forms import EventForm, CommentForm, UpdateEventForm
+from .event_forms import EventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -96,7 +96,7 @@ def check_upload_file(form):
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
-    form = UpdateEventForm()
+    form = EventForm()
     event_to_update = Event.query.get_or_404(id)
     print('In Update')
     print(event_to_update)
@@ -108,26 +108,14 @@ def update(id):
             form.startDate.data, midnight)
         print(event_to_update)
         event_to_update.name = request.form['name']
-        if event_to_update.description is None:
-            event_to_update.description = Event.query.description(id)
-        else:
-            event_to_update.description = request.form['description']
-        if event_to_update.startDate is None:
-            event_to_update.startDate = Event.query.startDate(id)
-        else:
-            event_to_update.startDate = startDateData
+        event_to_update.description = request.form['description']
+        event_to_update.startDate = startDateData
         event_to_update.duration = request.form['duration']
         event_to_update.location = request.form['location']
-        if event_to_update.image is None:
-            event_to_update.image = Event.query.image(id)
-        else:
-            event_to_update.image = db_file_path
+        event_to_update.image = db_file_path
         event_to_update.max_tickets = request.form['max_tickets']
         event_to_update.cost = request.form['cost']
-        if event_to_update.status is None:
-            event_to_update.status = Event.query.status(id)
-        else:
-            event_to_update.status = request.form['status']
+        event_to_update.status = request.form['status']
         print('Finished POST')
         print(event_to_update)
         try:
