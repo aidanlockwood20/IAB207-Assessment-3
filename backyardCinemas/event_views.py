@@ -1,7 +1,7 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
-from .event_models import Event, Comment
-from .event_forms import EventForm, CommentForm, Ticket
+from .event_models import Event, Comment, Order
+from .event_forms import EventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -14,7 +14,7 @@ bp = Blueprint('event', __name__, url_prefix='/events')
 @bp.route('/<id>')
 def show(id):
     event = Event.query.filter_by(id=id).first()
-    ticketsbought = Ticket.query.filter_by(event_id=id).count()
+    ticketsbought = Order.query.filter_by(event_id=id).count()
     ticketsAvailable = event.max_tickets - ticketsbought
     # create the comment form
     cform = CommentForm()
