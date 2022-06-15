@@ -18,6 +18,7 @@ def show(id):
     cform = CommentForm()
     return render_template('events/show_event.html', event=event, form=cform)
 
+
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
 @login_required
 def comment(event):
@@ -50,13 +51,12 @@ def create():
         # call the function that checks and returns image
         db_file_path = check_upload_file(form)
         event = Event(name=form.name.data, description=form.description.data,
-                      startDate=form.startDate.data, 
-                      duration=form.duration.data, 
-                      location=form.location.data, 
-                      image=db_file_path, 
-                      max_tickets=form.max_tickets.data, 
+                      startDate=form.startDate.data,
+                      duration=form.duration.data,
+                      location=form.location.data,
+                      image=db_file_path,
+                      max_tickets=form.max_tickets.data,
                       status=form.status.data)
-                      startDate=form.startDate.data, duration=form.duration.data, location=form.location.data, image=db_file_path, max_tickets=form.max_tickets.data, status=form.status.data)
         # add the object to the db session
         db.session.add(event)
         # commit to the database
@@ -88,25 +88,27 @@ def check_upload_file(form):
     fp.save(upload_path)
     return db_upload_path
 
-    #Update Events
-@bp.route('/update/<int:id>', methods = ['GET', 'POST'])
+    # Update Events
+
+
+@bp.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     form = EventForm()
     event_to_update = Event.query.get_or_404(id)
     if request.method == "POST":
-      event_to_update.name = request.form['name']
-      event_to_update.description = request.form['description']
-      event_to_update.startDate = request.form['startDate']
-      event_to_update.duration = request.form['duration']
-      event_to_update.location = request.form['location']
-      event_to_update.image = request.form['image']
-      event_to_update.max_tickets = request.form['max_tickets']
-      event_to_update.status = request.form['status']
-      try:
-          db.session.commit()
-          flash("Event Updated Successfully.")
-          return render_template("update_event.html", form=form, event_to_update=event_to_update)
-      except:    
+        event_to_update.name = request.form['name']
+        event_to_update.description = request.form['description']
+        event_to_update.startDate = request.form['startDate']
+        event_to_update.duration = request.form['duration']
+        event_to_update.location = request.form['location']
+        event_to_update.image = request.form['image']
+        event_to_update.max_tickets = request.form['max_tickets']
+        event_to_update.status = request.form['status']
+        try:
+            db.session.commit()
+            flash("Event Updated Successfully.")
+            return render_template("update_event.html", form=form, event_to_update=event_to_update)
+        except:
             flash("Error! Event Updated Unsuccessfully... try again.")
             return render_template("update_event.html", form=form, event_to_update=event_to_update)
     else:
