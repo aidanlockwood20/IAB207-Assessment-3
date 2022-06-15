@@ -9,7 +9,7 @@
   <div class="bg-light5 card border-3 p-2">
     <img class="card-img-top" src="{{event.image}}" alt="Card image cap">
     <div class="card bg-light5 border-0">
-        <h1 class="text-center my-3">{{event.name}}</h1>
+        <h1 class="text-center my-3"><a href="{{ url_for('update', id=event.id)}}">{{event.name}}</a></h1>
     </div>
     <div class="col-12 my-3">
         <div class="card bg-light2 border-0 m-0">

@@ -1,5 +1,6 @@
 
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
+from requests import request
 from .event_models import Event, Comment
 from .event_forms import EventForm, CommentForm
 from . import db
@@ -80,3 +81,27 @@ def check_upload_file(form):
     # save the file and return the db upload path
     fp.save(upload_path)
     return db_upload_path
+
+    #Update Events
+@bp.route('/update/<int:id>', methods = ['GET', 'POST'])
+def update(id):
+    form = EventForm()
+    event_to_update = Event.query.get_or_404(id)
+    if request.method == "POST":
+      event_to_update.name = request.form['name']
+      event_to_update.description = request.form['description']
+      event_to_update.startDate = request.form['startDate']
+      event_to_update.duration = request.form['duration']
+      event_to_update.location = request.form['location']
+      event_to_update.image = request.form['image']
+      event_to_update.max_tickets = request.form['max_tickets']
+      event_to_update.status = request.form['status']
+      try:
+          db.session.commit()
+          flash("Event Updated Successfully.")
+          return render_template("update_event.html", form=form, event_to_update=event_to_update)
+      except:    
+            flash("Error! Event Updated Unsuccessfully... try again.")
+            return render_template("update_event.html", form=form, event_to_update=event_to_update)
+    else:
+        return render_template("update_event.html", form=form, event_to_update=event_to_update)
