@@ -1,8 +1,7 @@
 
-from flask import Blueprint, render_template, request, redirect, url_for
-from grpc import Status
-from .event_models import Event, Comment, Ticket
-from .event_forms import EventForm, CommentForm
+from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
+from .event_models import Event, Comment
+from .event_forms import EventForm, CommentForm, Ticket
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -20,6 +19,7 @@ def show(id):
     # create the comment form
     cform = CommentForm()
     return render_template('events/show_event.html', event=event, form=cform, ticketsAvailable=ticketsAvailable)
+
 
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
 @login_required
@@ -53,14 +53,17 @@ def create():
         # call the function that checks and returns image
         db_file_path = check_upload_file(form)
         event = Event(name=form.name.data, description=form.description.data,
-                      image=db_file_path, startDate=form.startDate.data, 
-                      duration=form.duration.data, location=form.location.data,
-                      max_tickets=form.max_tickets.data, status=form.status.data,
-                      User=current_user)
+                      startDate=form.startDate.data,
+                      duration=form.duration.data,
+                      location=form.location.data,
+                      image=db_file_path,
+                      max_tickets=form.max_tickets.data,
+                      status=form.status.data, cost=form.cost.data)
         # add the object to the db session
         db.session.add(event)
         # commit to the database
         db.session.commit()
+        flash('Successfully created new event!')
         print('Successfully created new event', 'success')
         # Always end with redirect when form is valid
         return redirect(url_for('event.show', id=event.id))
@@ -88,3 +91,37 @@ def check_upload_file(form):
     # save the file and return the db upload path
     fp.save(upload_path)
     return db_upload_path
+
+    # Update Events
+
+
+@bp.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    form = EventForm()
+    event_to_update = Event.query.get_or_404(id)
+    print('In Update')
+    if request.method == "POST":
+        # if form.validate_on_submit():
+        print('In POST')
+        event_to_update.name = request.form['name']
+        event_to_update.description = request.form['description']
+        event_to_update.startDate = request.form['startDate']
+        event_to_update.duration = request.form['duration']
+        event_to_update.location = request.form['location']
+        # db_file_path = check_upload_file(form)
+        # event_to_update.image = request.form[db_file_path, False]
+        event_to_update.max_tickets = request.form['max_tickets']
+        event_to_update.cost = request.form['cost']
+        event_to_update.status = request.form['status']
+        print('Finished POST')
+        try:
+            db.session.commit()
+            flash("Event Updated Successfully.")
+            print('Event Updated Successfully.')
+            return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+        except:
+            db.session.rollback()
+            flash("Error! Event Updated Unsuccessfully... try again.")
+            return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+    else:
+        return render_template("events/update_event.html", form=form, event_to_update=event_to_update)

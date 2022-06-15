@@ -139,6 +139,10 @@ footer a {
     text-align-last: center;
 }
 
+.error-text {
+    color: red
+}
+
 #userhistory {
     color: rgb(218, 191, 118);
 }

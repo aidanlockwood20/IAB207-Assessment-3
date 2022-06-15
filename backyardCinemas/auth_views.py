@@ -10,7 +10,7 @@ from .auth_forms import RegistrationForm, LoginForm
 from .auth_models import User
 
 # Authentication endpoint
-auth_bp = Blueprint('auth', __name__, url_prefix = '/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 # View to register new users
 
@@ -28,19 +28,21 @@ def registration_view():
         first_name = register_form.first_name.data
         last_name = register_form.last_name.data
         email_address = register_form.email_address.data
+        contact_number = register_form.contact_number.data
+        address = register_form.address.data
         password = register_form.password1.data
 
         # Check if user exists
         u1 = User.query.filter_by(email_address=email_address).first()
         if u1:
             flash('User name already exists, please login')
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.login_view'))
         # Generate the password hash to be saved into the db
         password_hashed = generate_password_hash(password)
 
         # Create new instance of the user to be saved into the database
         user = User(first_name=first_name, last_name=last_name,
-                    email_address=email_address, password_hash=password_hashed)
+                    email_address=email_address, contact_number=contact_number, address=address, password_hash=password_hashed)
 
         # Add DB commit to put new user into the database
         db.session.add(user)
@@ -48,7 +50,7 @@ def registration_view():
 
         return redirect(url_for('auth.login_view'))
     else:
-        return render_template('auth/register.html', title = 'Sign Up', form = register_form)
+        return render_template('auth/register.html', title='Sign Up', form=register_form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -57,10 +59,10 @@ def login_view():
     form = LoginForm()
 
     error = None
-    
+
     if form.validate_on_submit():
 
-        # Debug code to check whether the if conditional works 
+        # Debug code to check whether the if conditional works
         print('Form submit')
 
         email_address = form.email_address.data
@@ -74,7 +76,7 @@ def login_view():
         # If user is correct but password incorrect, return invalid password
         elif not check_password_hash(user_query.password_hash, password):
             error = 'Incorrect Password. Try Again'
-        # No errors - log user in 
+        # No errors - log user in
         if error is None:
             login_user(user_query)
             # Back-end feedback for user logging in (Useful pre-development of functional navbar)
@@ -83,7 +85,7 @@ def login_view():
         print(error)
         flash(error)
 
-    return render_template('auth/login.html', title = 'Login', form = form)
+    return render_template('auth/login.html', title='Login', form=form)
 
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])
