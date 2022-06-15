@@ -1,6 +1,5 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
-from requests import request
 from .event_models import Event, Comment
 from .event_forms import EventForm, CommentForm
 from . import db
@@ -51,6 +50,12 @@ def create():
         # call the function that checks and returns image
         db_file_path = check_upload_file(form)
         event = Event(name=form.name.data, description=form.description.data,
+                      startDate=form.startDate.data, 
+                      duration=form.duration.data, 
+                      location=form.location.data, 
+                      image=db_file_path, 
+                      max_tickets=form.max_tickets.data, 
+                      status=form.status.data)
                       startDate=form.startDate.data, duration=form.duration.data, location=form.location.data, image=db_file_path, max_tickets=form.max_tickets.data, status=form.status.data)
         # add the object to the db session
         db.session.add(event)
@@ -59,6 +64,7 @@ def create():
         print('Successfully created new event', 'success')
         # Always end with redirect when form is valid
         return redirect(url_for('event.create'))
+    print(form.errors)
     return render_template('events/create_event.html', form=form)
 
 

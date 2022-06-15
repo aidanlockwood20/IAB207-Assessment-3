@@ -16,7 +16,7 @@
       <h1 class="text-center my-2">Create a new movie showing</h1>
       <h4 class="text-center my-3">Enter the details of your event</h4>
     </div>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       {{ form.hidden_tag() }}
       <div class="col-12 my-0">
         <div class="card bg-light2 border-0 m-0">
@@ -25,24 +25,28 @@
             {{ form.name(class_="form-control bg-light5") }}
           </div>
           <div class="card-body">
+            <h5>{{ form.description.label }}</h5>
+            {{ form.description(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body">
+            <h5>{{ form.location.label }}</h5>
+            {{ form.location(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body">
+            <h5>{{ form.location.label }}</h5>
+            {{ form.location(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body">
             <h5>{{ form.image.label }}</h5>
             {{ form.image(class_="form-control bg-light5") }}
-          </div>
-          <div class="card-body">
-            <h5>{{ form.location.label }}</h5>
-            {{ form.location(class_="form-control bg-light5") }}
-          </div>
-          <div class="card-body">
-            <h5>{{ form.location.label }}</h5>
-            {{ form.location(class_="form-control bg-light5") }}
-          </div>
+          </div> 
           <div class="card-body">
             <h5>{{ form.max_tickets.label }}</h5>
             {{ form.max_tickets(class_="form-control bg-light5") }}
           </div>
           <div class="card-body">
-            <h5>{{ form.description.label }}</h5>
-            {{ form.description(class_="form-control bg-light5") }}
+            <h5>{{ form.status.label }}</h5>
+            {{ form.status(class_="form-control bg-light5") }}
           </div>
           <div class="card-body">
             <h5>{{ form.status.label }}</h5>
