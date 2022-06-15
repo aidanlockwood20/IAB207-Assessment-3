@@ -30,6 +30,26 @@ class EventForm(FlaskForm):
         'Inactive', 'Inactive'), ('Booked', 'Booked'), ('Cancelled', 'Cancelled')], validators=[InputRequired()])
     submit = SubmitField("Create")
 
+# Update event form
+
+
+class UpdateEventForm(FlaskForm):
+    name = StringField('Event name/Movie Title')
+    description = TextAreaField('Description')
+    startDate = DateField('Date')
+    duration = IntegerField('Duration of movie (mins)',
+                            validators=[NumberRange(min=1)])
+    location = StringField('Event Location')
+    image = FileField('Event Image', validators=[
+        FileAllowed(ALLOWED_FILE, message='Only supports png,jpg,JPG,PNG')])
+    max_tickets = IntegerField(
+        'Number of tickets', validators=[NumberRange(min=1, message='Must select more than zero tickets')])
+    cost = IntegerField('Cost per ticket', validators=[NumberRange(min=1)], render_kw={
+                        "placeholder": "Please enter an amount in dollars ($)"})
+    status = SelectField('Event status', choices=[('', 'Choose a Status'), ('Upcoming', 'Upcoming'), (
+        'Inactive', 'Inactive'), ('Booked', 'Booked'), ('Cancelled', 'Cancelled')])
+    submit = SubmitField("Create")
+
 # User comment form
 
 
