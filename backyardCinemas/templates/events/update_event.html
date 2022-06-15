@@ -25,8 +25,8 @@
             {{ form.name(class_="form-control bg-light5", value=event_to_update.name) }}
           </div>
           <div class="card-body">
-            <h5>{{ form.image.label }}</h5>
-            {{ form.image(class_="form-control bg-light5", value=event_to_update.image) }}
+            <h5>{{ form.description.label }}</h5>
+            {{ form.description(class_="form-control bg-light5", value=event_to_update.description) }}
           </div>
           <div class="card-body">
             <h5>{{ form.location.label }}</h5>
@@ -45,8 +45,12 @@
             {{ form.max_tickets(class_="form-control bg-light5", value=event_to_update.max_tickets) }}
           </div>
           <div class="card-body">
-            <h5>{{ form.description.label }}</h5>
-            {{ form.description(class_="form-control bg-light5", value=event_to_update.description) }}
+            <h5>{{ form.cost.label }}</h5>
+            {{ form.cost(class_="form-control bg-light5", value=event_to_update.cost) }}
+          </div>
+          <div class="card-body">
+            <h5>{{ form.image.label }}</h5>
+            {{ form.image(class_="form-control bg-light5", value=event_to_update.image) }}
           </div>
           <div class="card-body">
             <h5>{{ form.status.label }}</h5>

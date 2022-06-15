@@ -23,6 +23,7 @@ class Event(db.Model):
     name = db.Column(db.String(80), nullable=False)
     image = db.Column(db.String(400))
     max_tickets = db.Column(db.Integer)
+    cost = db.Column(db.Integer)
     # From the task sheet: "In addition,
     # an event must have one of the following states: Upcoming, Inactive, Booked,
     # or Cancelled."

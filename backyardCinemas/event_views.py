@@ -55,8 +55,8 @@ def create():
                       duration=form.duration.data,
                       location=form.location.data,
                       image=db_file_path,
-                      max_tickets=form.max_tickets.data,
-                      status=form.status.data)
+                      max_tickets=form.max_tickets.data, 
+                      status=form.status.data, cost=form.cost.data)
         # add the object to the db session
         db.session.add(event)
         # commit to the database
@@ -103,6 +103,7 @@ def update(id):
         event_to_update.location = request.form['location']
         event_to_update.image = request.form['image']
         event_to_update.max_tickets = request.form['max_tickets']
+        event_to_update.cost = request.form['cost']
         event_to_update.status = request.form['status']
         try:
             db.session.commit()
