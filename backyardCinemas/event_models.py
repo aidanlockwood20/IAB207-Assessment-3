@@ -14,7 +14,7 @@ from datetime import datetime
 # Event Relationships:
 # Event is created by a user. An event can only be created by one user, a user can create many events. One to Many.
 # Event is appended with a comment. An event can have multiple comments, a comment can only relate to one event. Many to One.
-# Event has tickets. An event can have many tickets, a ticket can only relate to one event. Many to One.
+
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -38,37 +38,12 @@ class Event(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # Relationships with other tables
     comments = db.relationship('Comment', backref='Event')
-    tickets = db.relationship('Ticket', backref='Event')
+    orders = db.relationship('Order', backref='Event')
 
     def __repr__(self):
         format_string = '<Event object {}, Name: {}, Image: {}, Description: {}, Start Date: {}, Duration: {}, Location: {}>'
         return format_string.format(self.id, self.name, self.image, self.description, self.startDate, self.duration, self.location)
 
-#
-# Ticket Functions:
-# Removed "create_ticket" idea, makes no sense. Tickets are created upon purchase, the amount of tickets that exists
-# is defined by the event's max ticket count on event creation.
-# Purchase Tickets - Handled by /buy_tickets route in event_views.py
-#
-# Ticket Relationships:
-# Ticket is held by events. A ticket can only relate to one event, an event can have many tickets. One to Many.
-# Ticket is sold in order. A ticket can only be in one order, an order can have many tickets. One to Many.
-
-
-class Ticket(db.Model):
-    __tablename__ = 'tickets'
-    # Necessary Details
-    id = db.Column(db.Integer, primary_key=True)
-    # Using "Numeric(15,2)" for money data type acording to stackoverflow
-    # "SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively" - Deciding to use a String(5) for price. Will discuss with group.
-    price = db.Column(db.String(5), nullable=False)
-    # Foreign Relationships
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=True)
-    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
-
-    def __repr__(self):
-        format_string = '<Ticket object {}, Price: {}>'
-        return format_string.format(self.id, self.price)
 
 #
 # Comment Functions:
@@ -99,7 +74,7 @@ class Comment(db.Model):
 # Generate Order - Handled by /buy_tickets route in events_view.py
 #
 # Order Relationships:
-# Order contains tickets. An order can have many tickets. A ticket can only be in one order. Many to One.
+# Order is related to event. An order can only relate to one event. An event can have many orders. One to Many.
 # Order is served to user. An order can be served to only one user. A user can be served many orders. One to Many.
 
 
@@ -111,7 +86,7 @@ class Order(db.Model):
     # Ticket amount will be a call to how many tickets are assigned to this order within /create_order
     # (User buys ticket > Order is created > Ticket is created, then assigned to Order.)
     # Relationships with other tables
-    tickets = db.relationship('Ticket', backref='Order')
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 

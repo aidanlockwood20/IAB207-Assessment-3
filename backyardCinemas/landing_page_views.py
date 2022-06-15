@@ -4,7 +4,7 @@ from .event_models import Event
 
 from . import db
 from .auth_models import User
-from .event_models import Event, Ticket, Comment
+from .event_models import Event, Comment
 
 from .event_models import Event
 
