@@ -1,4 +1,8 @@
+
 from . import db
+from werkzeug.utils import secure_filename
+# additional import:
+from flask_login import login_required, current_user
 from datetime import datetime
 
 #
@@ -11,7 +15,6 @@ from datetime import datetime
 # Event is created by a user. An event can only be created by one user, a user can create many events. One to Many.
 # Event is appended with a comment. An event can have multiple comments, a comment can only relate to one event. Many to One.
 # Event has tickets. An event can have many tickets, a ticket can only relate to one event. Many to One.
-
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -28,7 +31,7 @@ class Event(db.Model):
     # Just shy of 512 for description
     description = db.Column(db.String(500))
     startDate = db.Column(db.DateTime)
-    duration = db.Column(db.DateTime)
+    duration = db.Column(db.Time)
     location = db.Column(db.String(128))
     # Foreign Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
