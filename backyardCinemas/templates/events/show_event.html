@@ -41,7 +41,8 @@
       <div class="col-6 m-3 mt-0 col-md-4">
         {% for comment in event.comments %}
         <div class="col-md-12">
-          <b>{{comment.User.first_name}} <span class="ml-2 text-muted">{{comment.created_at}}</span></b>
+          <b>{{comment.User.first_name}} &nbsp;&nbsp;<span
+              class="ml-2 text-muted">{{comment.created_at|format_datetime}}</span></b>
           <p>{{comment.text}}</p>
         </div>
         {% endfor %}
