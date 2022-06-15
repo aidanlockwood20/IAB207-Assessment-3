@@ -18,13 +18,13 @@ class Event(db.Model):
     # Necessary Details according to task sheet: Image, descrition, date, "other specific information"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    image = db.Column(db.String(400), nullable=False)
+    image = db.Column(db.String(400), nullable=True)
     max_tickets = db.Column(db.Integer)
     # From the task sheet: "In addition,
     # an event must have one of the following states: Upcoming, Inactive, Booked,
     # or Cancelled."
     # Longest word is 9 long, may as well store value as string(10). Default to Upcoming.
-    status = db.Column(db.String(10), nullable=False, default="Upcoming")
+    status = db.Column(db.String(10), nullable=True, default="Upcoming")
     # Just shy of 512 for description
     description = db.Column(db.String(500))
     startDate = db.Column(db.DateTime)
