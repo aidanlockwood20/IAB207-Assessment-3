@@ -2,17 +2,46 @@
 
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-  <div class="container">
-    <div class="row mt-5">
-      <div class="col-md-12">
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
 
-        <h1>Create a new movie showing</h1>
-        <p>Enter the details of your event.</p>
 
-        {{wtf.quick_form(form)}}
-        
-      </div>
     </div>
   </div>
-
+</div>
+<div class="container-xxl bg-dark my-5 py-3">
+  <div class="bg-light5 card border-3 p-2">
+    <div class="card bg-light5 border-0">
+      <h1 class="text-center my-2">Create a new movie showing</h1>
+      <h4 class="text-center my-3">Enter the details of your event</h4>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <div class="col-12 my-0">
+        <div class="card bg-light2 border-0 m-0">
+          <div class="card-body">
+            <h5>{{ form.name.label }}</h5>
+            {{ form.name(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body">
+            <h5>{{ form.image.label }}</h5>
+            {{ form.image(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body">
+            <h5>{{ form.date.label }}</h5>
+            {{ form.date(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body">
+            <h5>{{ form.description.label }}</h5>
+            {{ form.description(class_="form-control bg-light5") }}
+          </div>
+          <div class="card-body row justify-content-center mx-0">
+            {{ form.submit(class_="btn bg-light6 col-md-8 col-lg-6 col-xxl-4", style="font-size: 20px;") }}
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
