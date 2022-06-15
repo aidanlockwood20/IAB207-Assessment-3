@@ -13,8 +13,8 @@ class EventForm(FlaskForm):
   name = StringField('Event name/Movie Title', validators=[InputRequired()])
   description = TextAreaField('Description', 
             validators=[InputRequired()])
-  startDate = DateTimeField('Date', validators=[InputRequired()])
-  duration = TimeField('Duration of movie', validators=[InputRequired()])
+  startDate = DateField('Date', validators=[InputRequired()])
+  duration = IntegerField('Duration of movie (mins)', validators=[InputRequired()])
   location = StringField('Event Location', validators=[InputRequired()])
   image = FileField('Event Image', validators=[
     FileRequired(message='Image cannot be empty'),

@@ -20,6 +20,7 @@ def create_app():
     app.secret_key = 'Somesecretkey'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///backyardCinemas.db'
 
+    app.config['UPLOAD_EXTENSIONS'] = ['PNG','JPG','png','jpg']
     # Configuring the Login Manager
     login_manager = LoginManager()
 
