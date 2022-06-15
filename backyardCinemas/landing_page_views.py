@@ -23,7 +23,8 @@ def index():
 @main_bp.route('/search')
 def search():
     if request.args['search']:
+        regex_query = f'%{request.args["search"]}%'
         search_results = request.args["search"]
-
-        events = Event.query.filter(Event.description.like(search_results)).all()
-        return render_template('search.html', results = search_results)
+        events = Event.query.filter(Event.name.like(regex_query)).all()
+        print(events)
+        return render_template('search.html', query = search_results, results = events)

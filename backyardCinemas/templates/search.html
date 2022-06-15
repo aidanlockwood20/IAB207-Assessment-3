@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}Search Results for '{{ results }}'{% endblock %}
+{% block title %}Search Results for '{{ query }}'{% endblock %}
 
 {% block content %}
 <div class="container-xxl bg-dark my-5 py-3">
     <div class="bg-light5 card border-3 p-2">
         <div class="card bg-light5 border-0">
-            <h1 class="text-center my-3">Search Results for '{{ results }}'</h1>
+            <h1 class="text-center my-3">Search Results for '{{ query }}'</h1>
         </div>
     </div>
 </div>
 
-{% for result in search_results %}
-
+{% for result in results %}
+<div class="container-xxl bg-dark my-5 py-3">
+    <div class="bg-light5 card border-3 p-2">
+        <div class="card bg-light5 border-0">
+            <h1>Hello World</h1>
+        </div>
+    </div> 
+</div> 
 {% endfor %}
 
 {% endblock %}
