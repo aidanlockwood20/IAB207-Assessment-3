@@ -55,7 +55,7 @@ def create():
                       duration=form.duration.data,
                       location=form.location.data,
                       image=db_file_path,
-                      max_tickets=form.max_tickets.data, 
+                      max_tickets=form.max_tickets.data,
                       status=form.status.data, cost=form.cost.data)
         # add the object to the db session
         db.session.add(event)
@@ -108,9 +108,9 @@ def update(id):
         try:
             db.session.commit()
             flash("Event Updated Successfully.")
-            return render_template("update_event.html", form=form, event_to_update=event_to_update)
+            return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
         except:
             flash("Error! Event Updated Unsuccessfully... try again.")
-            return render_template("update_event.html", form=form, event_to_update=event_to_update)
+            return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
     else:
-        return render_template("update_event.html", form=form, event_to_update=event_to_update)
+        return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
