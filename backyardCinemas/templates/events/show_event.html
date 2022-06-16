@@ -34,10 +34,27 @@
             <h5>Avaliable Tickets</h5>
             {{ticketsAvailable}}
           </div>
-          <div class="card-body row justify-content-center mx-0">
-            <a class="nav-link btn bg-light6" style="font-size: 20px;"
-            href="javascript:void(0);">Book Now</a>
-          </div>
+
+          <form method="POST" action="/events/{{event.id}}/book" class="form-inline" role="form">
+          {{ form2.hidden_tag() }}
+            <div class="card-body">
+              
+                
+
+                <div class="form-group">
+                <h5 class="inline">{{ form2.tickets.label }}</h5>
+                {{ form2.tickets(class_="form-control small inline  bg-light5") }}
+                </div>
+            </div>
+
+            <div class="card-body row justify-content-center mx-0">
+              {{ form2.submit(class_="nav-link btn bg-light6 font-20") }}
+              <!--
+              <a class="nav-link btn bg-light6" style="font-size: 20px;"
+              href="javascript:void(0);">Book Now</a>
+              -->
+            </div>
+          </form>
       </div>
     </div>
     <div class="bg-light2 border-0 m-0 row justify-content-center">

@@ -1,7 +1,9 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
+
+from backyardCinemas.error_views import page_not_found
 from .event_models import Event, Comment, Order
-from .event_forms import EventForm, CommentForm
+from .event_forms import EventForm, CommentForm, OrderForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -14,11 +16,16 @@ bp = Blueprint('event', __name__, url_prefix='/events')
 @bp.route('/<id>')
 def show(id):
     event = Event.query.filter_by(id=id).first()
-    ticketsbought = Order.query.filter_by(event_id=id).count()
-    ticketsAvailable = event.max_tickets - ticketsbought
-    # create the comment form
-    cform = CommentForm()
-    return render_template('events/show_event.html', event=event, form=cform, ticketsAvailable=ticketsAvailable)
+    if(event != None):
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        # create the comment form
+        cform = CommentForm()
+        #create the order form
+        oform = OrderForm()
+        return render_template('events/show_event.html', event=event, form=cform, form2=oform, ticketsAvailable=ticketsAvailable)
+    else:
+        return page_not_found(404)
 
 
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
@@ -66,7 +73,7 @@ def create():
         flash('Successfully created new event!')
         print('Successfully created new event', 'success')
         # Always end with redirect when form is valid
-        return redirect(url_for('event.show', id=event.id))
+        return redirect(url_for('main.index'))
     else:
         print('Failed validation')
     return render_template('events/create_event.html', form=form)
@@ -75,6 +82,24 @@ def create():
 @bp.route('/purchase_history', methods=['GET', 'POST'])
 def purchase_history():
     return render_template('events/purchase_history.html')
+
+@bp.route('/<id>/book', methods=['GET', 'POST'])
+def book(id):
+    event = Event.query.filter_by(id=id).first()
+    form = OrderForm()
+    if form.validate_on_submit():
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        if(ticketsAvailable >= form.tickets.data):
+            for i in range(form.tickets.data):
+                order = Order(event_id=id, user_id=current_user.id)
+                # add the object to the db session
+                db.session.add(order)
+                # commit to the database
+                db.session.commit()
+            flash('Booked Successfully!')
+            print('Booked Successfully', 'success')
+    return redirect(url_for('main.index'))
 
 
 def check_upload_file(form):
