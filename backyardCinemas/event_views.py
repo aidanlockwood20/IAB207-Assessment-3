@@ -76,7 +76,8 @@ def create():
 def event_history():
     print(current_user.id)
     event = Event.query.filter_by(user_id=current_user.id).all()
-    return render_template('events/event_history.html', events=event)
+    counter = len(event)
+    return render_template('events/event_history.html', events=event, counter=counter)
 
 
 def check_upload_file(form):
