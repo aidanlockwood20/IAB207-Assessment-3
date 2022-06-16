@@ -22,6 +22,7 @@ def registration_view():
     register_form = RegistrationForm()
 
     if register_form.validate_on_submit():
+        print('Form submit')
 
         # Gather the data from the form
         first_name = register_form.first_name.data
@@ -61,6 +62,9 @@ def login_view():
 
     if form.validate_on_submit():
 
+        # Debug code to check whether the if conditional works
+        print('Form submit')
+
         email_address = form.email_address.data
         password = form.password.data
 
@@ -75,7 +79,11 @@ def login_view():
         # No errors - log user in
         if error is None:
             login_user(user_query)
+            # Back-end feedback for user logging in (Useful pre-development of functional navbar)
+            flash('Successfully logged in!')
+            print('User successfully logged in!')
             return redirect(url_for('main.index'))
+        print(error)
         flash(error)
 
     return render_template('auth/login.html', title='Login', form=form)
