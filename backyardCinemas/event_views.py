@@ -1,6 +1,6 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
-from .event_models import Event, Comment
+from .event_models import Event, Comment, Order
 from .event_forms import EventForm, CommentForm
 from . import db
 import os
@@ -14,9 +14,11 @@ bp = Blueprint('event', __name__, url_prefix='/events')
 @bp.route('/<id>')
 def show(id):
     event = Event.query.filter_by(id=id).first()
+    ticketsbought = Order.query.filter_by(event_id=id).count()
+    ticketsAvailable = event.max_tickets - ticketsbought
     # create the comment form
     cform = CommentForm()
-    return render_template('events/show_event.html', event=event, form=cform)
+    return render_template('events/show_event.html', event=event, form=cform, ticketsAvailable=ticketsAvailable)
 
 
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
@@ -64,8 +66,9 @@ def create():
         flash('Successfully created new event!')
         print('Successfully created new event', 'success')
         # Always end with redirect when form is valid
-        return redirect(url_for('event.create'))
-    print(form.errors)
+        return redirect(url_for('event.show', id=event.id))
+    else:
+        print('Failed validation')
     return render_template('events/create_event.html', form=form)
 
 
