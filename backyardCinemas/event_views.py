@@ -88,6 +88,7 @@ def book(id):
     event = Event.query.filter_by(id=id).first()
     form = OrderForm()
     if form.validate_on_submit():
+        # Buy Requested Tickets
         ticketsbought = Order.query.filter_by(event_id=id).count()
         ticketsAvailable = event.max_tickets - ticketsbought
         if(ticketsAvailable >= form.tickets.data):
@@ -101,6 +102,12 @@ def book(id):
             print('Booked Successfully', 'success')
         else:
             flash('Sorry, there are not enough tickets available!')
+        # Count tickets left and update status if fully booked
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        if(ticketsAvailable == 0):
+            event.status = 'Booked Out'
+            db.session.commit()
     return redirect(url_for('main.index'))
 
 
