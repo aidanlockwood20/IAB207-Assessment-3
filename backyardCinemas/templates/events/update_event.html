@@ -72,7 +72,13 @@
           <div class="card-body row justify-content-center mx-0">
             {{ form.submit(class_="btn bg-light6 col-md-8 col-lg-6 col-xxl-4", style="font-size: 20px;") }}
           </div>
+
         </div>
+      </div>
+    </form>
+    <form method="POST" action="{{ event_to_update.id }}/delete_event" class="form-inline" role="form">
+      <div class="card-body row justify-content-center mx-0">
+        {{ form3.submit(class_="nav-link btn bg-light6 font-20") }}
       </div>
     </form>
   </div>

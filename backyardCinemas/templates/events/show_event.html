@@ -2,6 +2,25 @@
 
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% block messages %}
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      {% with flash_messages = get_flashed_messages() %}
+      {% if flash_messages %}
+      {% for message in flash_messages %}
+      <div class="alert alert-success">
+        <h3>{{ message }}</h3>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <div class="container-xxl bg-dark my-5 py-3">
@@ -9,56 +28,63 @@
   <div class="bg-light5 card border-3 p-2">
     <img class="card-img-top" src="{{event.image}}" alt="Card image cap">
     <div class="card bg-light5 border-0">
-      <h1 class="text-center my-3"><a class="remove-underline bg-light2" href="{{ url_for('event.update', id=event.id)}}">{{event.name}}</a></h1>
-      <h3 class="text-center my-3">{{event.status}}</h3>
+      <h1 class="text-center my-3"><a class="remove-underline bg-light2"
+          href="{{ url_for('event.update', id=event.id)}}">{{event.name}}</a></h1>
+      <p class="text-center">Click title to update your event!</p>
+      <h3 class="text-center my-2">{{event.status}}</h3>
     </div>
     <div class="col-12 my-3">
       <div class="card bg-light2 border-0 m-0">
-          <div class="card-body">
-              <h5>Description</h5>
-              {{event.description}}
-          </div>
-          <div class="card-body">
-              <h5>Date</h5>
-              {{event.startDate.date()}}
-          </div>
-          <div class="card-body">
-            <h5>Duration</h5>
-            {{event.duration}} min
-          </div>
-          <div class="card-body">
-            <h5>Location</h5>
-            {{event.location}}
-          </div>
-          <div class="card-body">
-            <h5>Price</h5>
-            ${{event.cost}} per ticket
-          </div>
-          <div class="card-body">
-            <h5>Avaliable Tickets</h5>
-            {{ticketsAvailable}}
-          </div>
+        <div class="card-body">
+          <h5>Description</h5>
+          {{event.description}}
+        </div>
+        <div class="card-body">
+          <h5>Date</h5>
+          {{event.startDate.date()}}
+        </div>
+        <div class="card-body">
+          <h5>Duration</h5>
+          {{event.duration}} min
+        </div>
+        <div class="card-body">
+          <h5>Location</h5>
+          {{event.location}}
+        </div>
+        <div class="card-body">
+          <h5>Price</h5>
+          ${{event.cost}} per ticket
+        </div>
+        <div class="card-body">
+          <h5>Avaliable Tickets</h5>
+          {{ticketsAvailable}}
+        </div>
 
-          <form method="POST" action="/events/{{event.id}}/book" class="form-inline" role="form">
+        <form method="POST" action="/events/{{event.id}}/book" class="form-inline" role="form">
           {{ form2.hidden_tag() }}
-            <div class="card-body">
-              
-                
+          <div class="card-body">
 
-                <div class="form-group">
-                <h5 class="inline">{{ form2.tickets.label }}</h5>
-                {{ form2.tickets(class_="form-control small inline  bg-light5") }}
-                </div>
+
+
+            <div class="form-group">
+              <h5 class="inline">{{ form2.tickets.label }}</h5>
+              {{ form2.tickets(class_="form-control small inline bg-light5") }}
             </div>
+          </div>
 
-            <div class="card-body row justify-content-center mx-0">
-              {{ form2.submit(class_="nav-link btn bg-light6 font-20") }}
-              <!--
+          <div class="card-body row justify-content-center mx-0">
+            {{ form2.submit(class_="nav-link btn bg-light6 font-20") }}
+            <!--
               <a class="nav-link btn bg-light6" style="font-size: 20px;"
               href="javascript:void(0);">Book Now</a>
               -->
-            </div>
-          </form>
+          </div>
+
+        </form>
+        <div class="card bg-light5 border-0">
+          <h2 class="text-center my-2">Looking to delete your event? Check the bottom of the Event Update page!</h2>
+
+        </div>
       </div>
     </div>
     <div class="bg-light2 border-0 m-0 row justify-content-center">
@@ -68,7 +94,7 @@
       <div class="col-6 m-3 mt-0 col-md-4">
         {% for comment in event.comments %}
         <div class="col-md-12">
-          <b>{{comment.User.first_name}} <span class="ml-2 text-muted">{{comment.created_at}}</span></b>
+          <b>{{comment.User.first_name}} <span class="ml-2 text-muted">{{comment.created_at|format_datetime}}</span></b>
           <p>{{comment.text}}</p>
         </div>
         {% endfor %}

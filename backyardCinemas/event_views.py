@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 
 from backyardCinemas.error_views import page_not_found
 from .event_models import Event, Comment, Order
-from .event_forms import EventForm, CommentForm, OrderForm
+from .event_forms import EventForm, CommentForm, OrderForm, DeleteForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -22,9 +22,11 @@ def show(id):
         ticketsAvailable = event.max_tickets - ticketsbought
         # create the comment form
         cform = CommentForm()
-        #create the order form
+        # create the order form
         oform = OrderForm()
-        return render_template('events/show_event.html', event=event, form=cform, form2=oform, ticketsAvailable=ticketsAvailable)
+        # create delete form
+        form3 = DeleteForm()
+        return render_template('events/show_event.html', event=event, form=cform, form2=oform, form3=form3, ticketsAvailable=ticketsAvailable)
     else:
         return page_not_found(404)
 
@@ -83,12 +85,42 @@ def create():
     return render_template('events/create_event.html', form=form)
 
 
+@bp.route('update/<int:id>/delete_event', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    print('in def')
+    event_to_delete = Event.query.filter_by(id=id).first()
+    CurrentUser = current_user.id
+    form = DeleteForm()
+    ecomments = Comment.query.filter_by(event_id=id).all()
+    if CurrentUser == event_to_delete.user_id:
+        print('form validate')
+        # Check correct user
+        if request.method == "POST":
+            print('user validate')
+            # Check there are comments
+            if len(ecomments) == 0:
+                # No comments - Delete event
+                db.session.delete(event_to_delete)
+                db.session.commit()
+                return redirect(url_for('main.index'))
+            else:
+                # Delete comments first
+                for i in ecomments:
+                    db.session.delete(i)
+                db.session.delete(event_to_delete)
+                db.session.commit()
+                return redirect(url_for('main.index'))
+    return redirect(url_for('main.index'))
+
+
 @bp.route('/event_history', methods=['GET', 'POST'])
 def event_history():
     print(current_user.id)
     event = Event.query.filter_by(user_id=current_user.id).all()
     counter = len(event)
     return render_template('events/event_history.html', events=event, counter=counter)
+
 
 @bp.route('/<id>/book', methods=['GET', 'POST'])
 def book(id):
@@ -142,6 +174,7 @@ def update(id):
     CheckEvent = Event.query.filter_by(id=id).first()
     CheckUser = current_user.id
     if CheckEvent.user_id is CheckUser:
+        form3 = DeleteForm()
         form = EventForm()
         event_to_update = Event.query.get_or_404(id)
         print('In Update')
@@ -168,16 +201,16 @@ def update(id):
                 db.session.commit()
                 flash("Event Updated Successfully.")
                 print('Event Updated Successfully.')
-                return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+                return render_template("events/update_event.html", form=form, form3=form3, event_to_update=event_to_update)
             except:
                 db.session.rollback()
                 flash("Error! Event Updated Unsuccessfully... try again.")
                 print('Event Update Failed')
-                return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+                return render_template("events/update_event.html", form=form, form3=form3, event_to_update=event_to_update)
             finally:
                 db.session.close()
         else:
-            return render_template("events/update_event.html", form=form, event_to_update=event_to_update)
+            return render_template("events/update_event.html", form=form, form3=form3, event_to_update=event_to_update)
     else:
         flash('Error: You can only update the details of your own events!')
         print('User Auth Failed')

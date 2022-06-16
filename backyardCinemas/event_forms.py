@@ -1,5 +1,6 @@
+from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, IntegerField, DateField, SelectField
+from wtforms.fields import TextAreaField, SubmitField, StringField, IntegerField, DateField, SelectField, BooleanField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 from .event_models import Event, Comment
@@ -37,6 +38,12 @@ class CommentForm(FlaskForm):
     text = TextAreaField('Comment', [InputRequired()])
     submit = SubmitField('Create')
 
+
 class OrderForm(FlaskForm):
-    tickets = IntegerField('Buy Tickets', validators=[InputRequired(), NumberRange(min=1)])
+    tickets = IntegerField('Buy Tickets', validators=[
+                           InputRequired(), NumberRange(min=1)])
     submit = SubmitField('Book Now')
+
+
+class DeleteForm(FlaskForm):
+    submit = SubmitField('Delete Event')
