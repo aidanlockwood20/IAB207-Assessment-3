@@ -7,16 +7,16 @@
 {% endblock %}
 
 {% block content %}
-{% with flash_messages = get_flashed_messages() %}
-{% if flash_messages %}
-{% for message in flash_messages %}
-<div class="alert alert-success">
-    <h3>{{ message }}</h3>
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
 <div class="container-xxl bg-dark my-5 py-3">
+    {% with flash_messages = get_flashed_messages() %}
+    {% if flash_messages %}
+    {% for message in flash_messages %}
+    <div class="alert alert-success">
+        <h3 class="text-center">{{ message }}</h3>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div class="bg-light5 card border-3 p-2">
         <div class="card bg-light5 border-0">
             <h1 class="text-center my-3">Login to your Account</h1>
