@@ -36,3 +36,7 @@ class EventForm(FlaskForm):
 class CommentForm(FlaskForm):
     text = TextAreaField('Comment', [InputRequired()])
     submit = SubmitField('Create')
+
+class OrderForm(FlaskForm):
+    tickets = IntegerField('Buy Tickets', validators=[InputRequired(), NumberRange(min=1)])
+    submit = SubmitField('Book Now')

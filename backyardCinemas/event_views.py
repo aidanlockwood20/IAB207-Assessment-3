@@ -1,8 +1,9 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
-from .event_models import Event, Comment
-from .auth_models import User
-from .event_forms import EventForm, CommentForm
+
+from backyardCinemas.error_views import page_not_found
+from .event_models import Event, Comment, Order
+from .event_forms import EventForm, CommentForm, OrderForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -16,9 +17,16 @@ bp = Blueprint('event', __name__, url_prefix='/events')
 @bp.route('/<id>')
 def show(id):
     event = Event.query.filter_by(id=id).first()
-    # create the comment form
-    cform = CommentForm()
-    return render_template('events/show_event.html', event=event, form=cform)
+    if(event != None):
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        # create the comment form
+        cform = CommentForm()
+        #create the order form
+        oform = OrderForm()
+        return render_template('events/show_event.html', event=event, form=cform, form2=oform, ticketsAvailable=ticketsAvailable)
+    else:
+        return page_not_found(404)
 
 
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
@@ -78,6 +86,33 @@ def event_history():
     event = Event.query.filter_by(user_id=current_user.id).all()
     counter = len(event)
     return render_template('events/event_history.html', events=event, counter=counter)
+
+@bp.route('/<id>/book', methods=['GET', 'POST'])
+def book(id):
+    event = Event.query.filter_by(id=id).first()
+    form = OrderForm()
+    if form.validate_on_submit():
+        # Buy Requested Tickets
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        if(ticketsAvailable >= form.tickets.data):
+            for i in range(form.tickets.data):
+                order = Order(event_id=id, user_id=current_user.id)
+                # add the object to the db session
+                db.session.add(order)
+                # commit to the database
+                db.session.commit()
+            flash('Booked Successfully!')
+            print('Booked Successfully', 'success')
+        else:
+            flash('Sorry, there are not enough tickets available!')
+        # Count tickets left and update status if fully booked
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        if(ticketsAvailable == 0):
+            event.status = 'Booked Out'
+            db.session.commit()
+    return redirect(url_for('main.index'))
 
 
 def check_upload_file(form):

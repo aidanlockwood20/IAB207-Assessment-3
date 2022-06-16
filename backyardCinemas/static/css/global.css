@@ -160,3 +160,17 @@ footer a {
     max-width: 75%;
     max-height: 75%;
 }
+
+
+
+.small {
+    width: 100px;
+}
+
+.inline {
+    display: inline;
+}
+
+.font-20 {
+    font-size: 20px;
+}
