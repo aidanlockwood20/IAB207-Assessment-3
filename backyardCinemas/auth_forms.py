@@ -7,8 +7,6 @@ from re import search
 
 
 def contact_validator(form, field):
-    print(field.data)
-    print(search("[^0-9+ ]", field.data))
     if len(field.data) > 20:
         raise ValidationError('Contact Number Must Be Shorter Than 20 Digits')
     elif search("[^0-9+ ]", field.data) != None:
