@@ -57,6 +57,8 @@
                     <div class="card-body">
                         <h5>{{ form.password1.label }}</h5>
                         {{ form.password1(class_="form-control bg-light5") }}
+                        <div class="error-text">{% for error in form.password1.errors %} {{ error }}
+                            {% endfor%}</div>
                     </div>
                     <div id="password-info">
                         <ul class="my-2">

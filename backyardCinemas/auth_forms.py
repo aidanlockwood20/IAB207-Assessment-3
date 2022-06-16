@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import InputRequired, Email, EqualTo, ValidationError
+from wtforms.validators import InputRequired, Email, EqualTo, ValidationError, Length, Regexp
 from re import search
 
 # Register Form Validators
@@ -11,6 +11,7 @@ def contact_validator(form, field):
         raise ValidationError('Contact Number Must Be Shorter Than 20 Digits')
     elif search("[^0-9+ ]", field.data) != None:
         raise ValidationError('Contact Number Must Contain Numbers')
+
 
     # Form used to register users
 
@@ -25,7 +26,7 @@ class RegistrationForm(FlaskForm):
         'Contact Number', validators=[InputRequired(), contact_validator])
 
     address = StringField('Home Address', validators=[InputRequired()])
-    password1 = PasswordField('Password', validators=[InputRequired()])
+    password1 = PasswordField('Password', validators=[InputRequired(), Length(min=8), Regexp("[0-9]+", message="Password Must Contain At Least One Number"), Regexp("(?=.*[@$!%*#?&])", message="Password Must Contain At Least One Special Character")])
     password2 = PasswordField('Confirm Password', validators=[
                               InputRequired(), EqualTo('password1', message='Passwords Must Match!')])
     submit = SubmitField('Sign Up!')
