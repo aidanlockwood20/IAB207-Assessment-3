@@ -12,7 +12,6 @@
     </div>
 </div>
 {% else %}
-{% for result in results %}
 <div class="container-xxl bg-dark my-5 py-3">
     <div class="bg-light5 card border-3 p-2">
         <div class="card bg-light5 border-0">
@@ -20,6 +19,7 @@
         </div>
     </div>
 </div>
+{% for result in results %}
 <div class="container-xxl bg-dark my-5 py-3">
     <a href="{{ url_for('event.show', id=result.id) }}" class="remove-underline">
         <div class="bg-light5 card border-3 p-2">
@@ -29,7 +29,7 @@
                 </div>
                 <h1>{{ result.name }}</h1>
                 <h3>{{ result.description }}</h3>
-                <h4>Viewing on: {{ result.startDate.strftime('%A %-d %B %Y') }}</h4>
+                <h4>Viewing on: {{ result.startDate.date() }}</h4>
                 <h4>Venue: {{ result.location }}</h4>
             </div>
         </div>
