@@ -71,7 +71,7 @@ def create():
         flash('Successfully created new event!')
         print('Successfully created new event', 'success')
         # Always end with redirect when form is valid
-        return redirect(url_for('event.show', id=event.id))
+        return redirect(url_for('main.index'))
     else:
         print('Failed validation')
     return render_template('events/create_event.html', form=form)
