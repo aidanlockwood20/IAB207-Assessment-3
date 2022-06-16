@@ -1,18 +1,41 @@
 {% extends 'base.html' %}
 
-{% block title %}Search Results for '{{ results }}'{% endblock %}
+{% block title %}Search Results for '{{ query }}'{% endblock %}
 
 {% block content %}
+{% if results|length == 0 %}
 <div class="container-xxl bg-dark my-5 py-3">
     <div class="bg-light5 card border-3 p-2">
         <div class="card bg-light5 border-0">
-            <h1 class="text-center my-3">Search Results for '{{ results }}'</h1>
+            <h1 class="text-center">Sorry, we could not find the event you were looking for</h1>
+        </div>  
+    </div>
+</div>
+{% else %}
+{% for result in results %}
+<div class="container-xxl bg-dark my-5 py-3">
+    <div class="bg-light5 card border-3 p-2">
+        <div class="card bg-light5 border-0">
+            <h1 class="text-center my-3">Search Results for '{{ query }}'</h1>
         </div>
     </div>
 </div>
-
-{% for result in search_results %}
-
+<div class="container-xxl bg-dark my-5 py-3">
+    <a href="{{ url_for('event.show', id=result.id) }}" class="remove-underline">
+        <div class="bg-light5 card border-3 p-2">
+            <div class="card bg-light5 my-3 border-0 text-center">
+                <div class="image-container container">
+                    <img src="{{ result.image }}" class="mx-auto search-image" alt="{{ result.name }}">
+                </div>
+                <h1>{{ result.name }}</h1>
+                <h3>{{ result.description }}</h3>
+                <h4>Viewing on: {{ result.startDate.strftime('%A %-d %B %Y') }}</h4>
+                <h4>Venue: {{ result.location }}</h4>
+            </div>
+        </div>
+    </a>
+</div>
 {% endfor %}
+{% endif %}
 
 {% endblock %}
