@@ -51,8 +51,9 @@ def create_app():
     app.register_blueprint(auth_bp)
 
     # Importing error views
-    from .error_views import page_not_found, interal_server_error
+    from .error_views import page_not_found, interal_server_error, method_not_allowed
     app.register_error_handler(404, page_not_found)
+    app.register_error_handler(405, method_not_allowed)
     app.register_error_handler(500, interal_server_error)
 
     # add event blueprint
