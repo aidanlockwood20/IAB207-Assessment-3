@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Method Not Allowed{% endblock %}
+{% block content %}
+<div class="container-xxl bg-dark my-5 py-3">
+    <div class="bg-light5 card border-3 p-2 errorplinks">
+        <h1>Method Not Allowed</h1>
+        <p>Method not allowed for this UR. Check the URL is typed correctly, that you are logged in, or
+            <a class="list-unstyled " href="{{ url_for('main.index') }}">return to homepage.</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
