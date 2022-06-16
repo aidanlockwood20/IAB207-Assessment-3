@@ -60,6 +60,9 @@ def create():
     if form.validate_on_submit():
         # call the function that checks and returns image
         db_file_path = check_upload_file(form)
+        if form.cost.data > 9999999999 or form.duration.data > 9999999999 or form.max_tickets.data > 9999999999:
+            flash('Numbers cannot be more than 9999999999', 'danger')
+            return redirect(url_for('event.create'))
         event = Event(name=form.name.data, description=form.description.data,
                       startDate=form.startDate.data,
                       duration=form.duration.data,

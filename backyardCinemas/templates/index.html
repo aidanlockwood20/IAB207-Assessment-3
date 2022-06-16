@@ -57,7 +57,12 @@
                     {% else %}
                     <h5 class="card-text">{{event.max_tickets}} tickets remain.</h5>
                     {% endif %}
+
+                    {% if event.description|length > 250 %}
+                    <p class="card-text justify1">{{event.description[0:250] + '...'}}</p>
+                    {% else %}
                     <p class="card-text justify1">{{event.description}}</p>
+                    {% endif %}
 
                     <p class="card-text">Located at: {{event.location}}</p>
                     <div class="d-flex">
