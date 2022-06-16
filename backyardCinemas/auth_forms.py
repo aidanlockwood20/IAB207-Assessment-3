@@ -26,7 +26,7 @@ class RegistrationForm(FlaskForm):
         'Contact Number', validators=[InputRequired(), contact_validator])
 
     address = StringField('Home Address', validators=[InputRequired()])
-    password1 = PasswordField('Password', validators=[InputRequired(), Length(min=8), Regexp("[0-9]+", message="Password Must Contain At Least One Number"), Regexp("(?=.*[@$!%*#?&])", message="Password Must Contain At Least One Special Character")])
+    password1 = PasswordField('Password', validators=[InputRequired(), Length(min=8), Regexp("(?=.*[0-9]+)", message="Password Must Contain At Least One Number"), Regexp("(?=.*[@$!%*_+#?&])", message="Password Must Contain At Least One Special Character")])
     password2 = PasswordField('Confirm Password', validators=[
                               InputRequired(), EqualTo('password1', message='Passwords Must Match!')])
     submit = SubmitField('Sign Up!')
