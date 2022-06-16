@@ -123,6 +123,7 @@ def event_history():
 
 
 @bp.route('/<id>/book', methods=['GET', 'POST'])
+@login_required
 def book(id):
     event = Event.query.filter_by(id=id).first()
     form = OrderForm()
