@@ -13,6 +13,12 @@ def create_app():
     # Initialise new Flask app object
     app = Flask(__name__)
 
+    # Filter for date/time on comments
+    @app.template_filter()
+    def format_datetime(value):
+        value = value.strftime
+        return value("%d/%m/%Y, %H:%M")
+
     bootstrap = Bootstrap(app)
 
     # Configure app object
@@ -20,7 +26,7 @@ def create_app():
     app.secret_key = 'Somesecretkey'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///backyardCinemas.db'
 
-    app.config['UPLOAD_EXTENSIONS'] = ['PNG','JPG','png','jpg']
+    app.config['UPLOAD_EXTENSIONS'] = ['PNG', 'JPG', 'png', 'jpg']
     # Configuring the Login Manager
     login_manager = LoginManager()
 
