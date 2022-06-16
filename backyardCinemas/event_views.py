@@ -99,6 +99,8 @@ def book(id):
                 db.session.commit()
             flash('Booked Successfully!')
             print('Booked Successfully', 'success')
+        else:
+            flash('Sorry, there are not enough tickets available!')
     return redirect(url_for('main.index'))
 
 
