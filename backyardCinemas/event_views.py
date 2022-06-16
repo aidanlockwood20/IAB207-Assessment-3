@@ -1,5 +1,7 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, render_template
+
+from backyardCinemas.error_views import page_not_found
 from .event_models import Event, Comment, Order
 from .event_forms import EventForm, CommentForm
 from . import db
@@ -14,11 +16,14 @@ bp = Blueprint('event', __name__, url_prefix='/events')
 @bp.route('/<id>')
 def show(id):
     event = Event.query.filter_by(id=id).first()
-    ticketsbought = Order.query.filter_by(event_id=id).count()
-    ticketsAvailable = event.max_tickets - ticketsbought
-    # create the comment form
-    cform = CommentForm()
-    return render_template('events/show_event.html', event=event, form=cform, ticketsAvailable=ticketsAvailable)
+    if(event != None):
+        ticketsbought = Order.query.filter_by(event_id=id).count()
+        ticketsAvailable = event.max_tickets - ticketsbought
+        # create the comment form
+        cform = CommentForm()
+        return render_template('events/show_event.html', event=event, form=cform, ticketsAvailable=ticketsAvailable)
+    else:
+        return page_not_found(404)
 
 
 @bp.route('/<event>/comment', methods=['GET', 'POST'])
