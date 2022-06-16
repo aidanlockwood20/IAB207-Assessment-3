@@ -47,6 +47,7 @@
                     <p class="card-text">Located at: {{event.location}}</p>
                     <div class="d-flex">
                         <a href="{{url_for('event.show', id=event.id)}}" class="btn bg-light3">View Event</a>
+                        <a href="{{ url_for('event.update', id=event.id)}}" class="btn bg-light3">Update Event</a>
                         <a href="" class="btn bg-light3 ms-3 disabled">{{event.status}}</a>
                     </div>
                 </div>

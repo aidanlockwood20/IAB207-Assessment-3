@@ -28,9 +28,7 @@
   <div class="bg-light5 card border-3 p-2">
     <img class="card-img-top" src="{{event.image}}" alt="Card image cap">
     <div class="card bg-light5 border-0">
-      <h1 class="text-center my-3"><a class="remove-underline bg-light2"
-          href="{{ url_for('event.update', id=event.id)}}">{{event.name}}</a></h1>
-      <p class="text-center">Click title to update your event!</p>
+      <h1 class="text-center my-3">>{{event.name}}</h1>
       <h3 class="text-center my-2">{{event.status}}</h3>
     </div>
     <div class="col-12 my-3">
@@ -82,7 +80,7 @@
 
         </form>
         <div class="card bg-light5 border-0">
-          <h2 class="text-center my-2">Looking to delete your event? Check the bottom of the Event Update page!</h2>
+          <h2 class="text-center my-2">Looking to delete your event? Go to your Event History and check the bottom of the Event Update page!</h2>
 
         </div>
       </div>
